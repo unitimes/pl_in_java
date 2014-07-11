@@ -15,16 +15,17 @@ public class StringCal {
 			}
 		} catch (Exception e) {
 			System.out.println("숫자와 허가된 기호 이외의 값을 입력 받음");
-			System.exit(0);
+			int[] temp = {0};
+			return temp;
 		}
 		return nums;
 	}
 
 	int add(int[] nums) {
-		int sum = 0;
+		int n = 0;
 		for (int i : nums)
-			sum += i;
-		return sum;
+			n += i;
+		return n;
 	}
 
 	public static void main(String[] args) {
