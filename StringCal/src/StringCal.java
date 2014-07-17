@@ -1,5 +1,5 @@
 public class StringCal {
-	String[] split(String str) {
+	public String[] split(String str) {
 		if (str.isEmpty()) {
 			String[] temp = { "0" };
 			return temp;
@@ -20,17 +20,23 @@ public class StringCal {
 		return nums;
 	}
 
-	int add(int[] nums) {
+	int sum(int[] nums) {
 		int sum = 0;
 		for (int i : nums)
 			sum += i;
 		return sum;
 	}
+	
+	int add(String str) {
+		if (str.isEmpty()) {
+			return 0;
+		}
+		return sum(convert(split(str)));
+	}
 
 	public static void main(String[] args) {
 		StringCal cal = new StringCal();
-		System.out.println(cal.add(cal.convert(cal.split("1\n3,6"))));
-		System.out.println(cal.add(cal.convert(cal.split("1\n3,g"))));
+		System.out.println(cal.add("1\n3,6"));
 	}
 
 }

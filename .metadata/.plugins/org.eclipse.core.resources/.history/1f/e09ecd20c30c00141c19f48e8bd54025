@@ -1,0 +1,15 @@
+import org.junit.Assert;
+
+import junit.framework.TestCase;
+
+
+public class StringCalculatorTest extends TestCase {
+	public void testSplitWhenComma() throws Exception {
+		StringCalculator cal = new StringCalculator();
+		Assert.assertArrayEquals(new String[]{"1","2","3"}, cal.split("1,2,3"));
+	}
+	public void testSplitWhenEnter() throws Exception {
+		StringCalculator cal = new StringCalculator();
+		Assert.assertArrayEquals(new String[]{"1","2","3"}, cal.split("1\n2\n3"));
+	}
+}

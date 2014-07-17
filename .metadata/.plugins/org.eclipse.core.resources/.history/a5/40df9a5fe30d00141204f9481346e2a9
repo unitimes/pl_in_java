@@ -1,0 +1,24 @@
+
+public class Ladder {
+	private Node[][] lad;
+	private int cols, rows;
+	public Ladder(int cols, int rows) {
+		this.cols = cols;
+		this.rows = rows;
+		lad = new Node[cols][12];
+		makeLadder();
+	}
+	private void makeLadder() {
+		int rowsPerCols = rows/cols;
+		int rests = rows%cols;
+		for(int i = 0; i < cols - 1; i++) {
+			makeConnet(i, rowsPerCols, rests--);
+		}
+	}
+	private void makeConnet(int numOfCol, int rowPerCols, int rests) {
+		if(rests > 0) {
+			
+			return;
+		}
+	}
+}

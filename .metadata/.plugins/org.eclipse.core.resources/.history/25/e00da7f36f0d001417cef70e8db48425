@@ -1,0 +1,8 @@
+
+public class Test {
+
+	public static void main(String[] args) {
+		System.out.print(String.format("a[%d;%df", 3,3));
+	}
+
+}

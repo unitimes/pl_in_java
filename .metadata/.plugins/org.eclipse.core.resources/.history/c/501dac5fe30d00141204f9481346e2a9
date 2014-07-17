@@ -1,0 +1,13 @@
+import junit.framework.TestCase;
+
+
+public class LadderTest extends TestCase {
+	Ladder lad;
+	@Override
+	protected void setUp() throws Exception {
+		lad = new Ladder();
+	}
+	public void testname() throws Exception {
+		
+	}
+}

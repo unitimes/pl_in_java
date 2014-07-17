@@ -1,0 +1,28 @@
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+
+public class StringCalTest {
+
+	@Test
+	public void testSplit() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testConvert() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testSum() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	public void testAdd() {
+		fail("Not yet implemented");
+	}
+
+}

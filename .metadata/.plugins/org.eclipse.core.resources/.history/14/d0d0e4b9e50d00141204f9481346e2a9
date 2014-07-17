@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+
+
+public class Ladder {
+	private Node[][] lad;
+	private int cols, rows;
+	private final int wRows = 12;
+	public Ladder(int cols, int rows) {
+		this.cols = cols;
+		this.rows = rows;
+		lad = new Node[cols][12];
+		makeLadder();
+	}
+	private void makeLadder() {
+		int rowsPerCols = rows/cols;
+		int rests = rows%cols;
+		for(int i = 0; i < cols - 1; i++) {
+			makeConnet(i, rowsPerCols, rests--);
+		}
+	}
+	private void makeConnet(int numOfCol, int rowPerCols, int rests) {
+		if(rests > 0) {
+			
+			return;
+		}
+	}
+	public void linkNodes(Node l, Node r) {
+		l.setR_node(r);
+		r.setL_node(l);
+	}
+	public int linkCols(int numOfCol, int numOfRows) {
+		ArrayList<Integer> rowList = new ArrayList<Integer>();
+		for (int i = 1; i < wRows - 1; i++) {
+			rowList.add(i);
+		}
+		return rowList.size();
+	}
+}
