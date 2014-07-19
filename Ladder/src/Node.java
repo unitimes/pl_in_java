@@ -5,9 +5,21 @@ public class Node {
 	private Node r_node;
 	private Node d_node;
 	private static Node prevNode;
+	private static OutOfRangeFlagException outOfRangeEx;
+
+	public Node(int x, int y) {
+		pos_x = x;
+		pos_y = y;
+	}
+
+	public Node(int x, int y, Node d) {
+		pos_x = x;
+		pos_y = y;
+		d_node = d;
+	}
 
 	public Node go() {
-		System.out.format("%d, %d /", this.pos_x, this.pos_y);
+		System.out.format("%d, %d / ", this.pos_x, this.pos_y);
 		if (l_node != null && l_node != prevNode) {
 			prevNode = this;
 			return l_node.go();
@@ -22,6 +34,33 @@ public class Node {
 		return this;
 	}
 
+	public void makeLink(int flag, Node n) throws OutOfRangeFlagException {
+		if (flag == 0) {
+			r_node = n;
+			return;
+		}
+		if (flag == 1) {
+			l_node = n;
+			return;
+		}
+		throw outOfRangeEx;
+	}
+
+	public void makeLink(int flag, Node n, Node d) throws OutOfRangeFlagException {
+		if (flag == 0) {
+			System.out.println("d linked");
+			r_node = n;
+			d_node = d;
+			return;
+		}
+		if (flag == 1) {
+			l_node = n;
+			d_node = d;
+			return;
+		}
+		throw outOfRangeEx;
+	}
+
 	public void print() {
 		String str = "|  ";
 		if (r_node != null) {
@@ -34,51 +73,13 @@ public class Node {
 		return pos_x;
 	}
 
-	public void setPos_x(int pos_x) {
-		this.pos_x = pos_x;
-	}
+	static class OutOfRangeFlagException extends Exception {
+		private String msg = "You've entered a flag out of range!";
 
-	public int getPos_y() {
-		return pos_y;
-	}
-
-	public void setPos_y(int pos_y) {
-		this.pos_y = pos_y;
-	}
-
-	public Node getL_node() {
-		try {
-			return l_node;
-		} catch (NullPointerException nu) {
-			return null;
+		@Override
+		public String getMessage() {
+			return msg;
 		}
-	}
 
-	public void setL_node(Node l_node) {
-		this.l_node = l_node;
-	}
-
-	public Node getR_node() {
-		try {
-			return r_node;
-		} catch (NullPointerException nu) {
-			return null;
-		}
-	}
-
-	public void setR_node(Node r_node) {
-		this.r_node = r_node;
-	}
-
-	public Node getD_node() {
-		try {
-			return d_node;
-		} catch (NullPointerException nu) {
-			return null;
-		}
-	}
-
-	public void setD_node(Node d_node) {
-		this.d_node = d_node;
 	}
 }
