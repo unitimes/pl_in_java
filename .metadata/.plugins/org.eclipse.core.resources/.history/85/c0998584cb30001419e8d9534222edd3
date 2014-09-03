@@ -1,0 +1,25 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+
+import chessgame.Board;
+import chessgame.Node;
+
+public class Pawn implements Piece {
+
+	@Override
+	public ArrayList<Node> searchMovibleNodes(int row, int col, Board presentBoard) {
+		ArrayList<Node> movibleNodes = new ArrayList<Node>();
+		if(!presentBoard.isPlaced(row + 1, col)) {
+			movibleNodes.add(new Node(row + 1, col, null));
+		}
+		if(presentBoard.isPlaced(row + 1, col + 1)) {
+			movibleNodes.add(new Node(row + 1, col + 1, null));
+		}
+		if(presentBoard.isPlaced(row + 1, col - 1)) {
+			movibleNodes.add(new Node(row + 1, col - 1, null));
+		}
+		return movibleNodes;
+	}
+
+}

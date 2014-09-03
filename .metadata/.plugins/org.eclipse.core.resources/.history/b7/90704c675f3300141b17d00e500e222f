@@ -1,0 +1,18 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+
+import core.Coordinate;
+import chessgame.Board;
+import chessgame.enums.Side;
+
+public interface Piece {
+	ArrayList<Coordinate> searchMovibleGrids(int row, int col,
+			Board presentBoard);
+	
+	Boolean isYourSide(Side side);
+
+	Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove, Board presentBoard);
+}

@@ -1,0 +1,28 @@
+package chessgame.piece;
+
+import java.util.Set;
+import core.Coordinate;
+import chessgame.Board;
+import chessgame.enums.Side;
+
+public class Rook implements Piece {
+	Side side;
+
+	public Rook(Side side) {
+		this.side = side;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			Board presentBoard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

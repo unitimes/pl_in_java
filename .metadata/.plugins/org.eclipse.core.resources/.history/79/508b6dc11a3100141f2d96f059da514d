@@ -1,0 +1,51 @@
+package chessgame;
+
+import java.util.ArrayList;
+
+import chessgame.piece.Pawn;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+public class Board {
+	final static int MAX_ROW = 8;
+	final static int MAX_COL = 8;
+	private Piece[][] grids;
+	
+	public Board () {
+		grids = new Piece[MAX_ROW][MAX_COL];
+		//setBoard();
+	}
+	
+	//for BoardSetter Class
+	
+	//---------------------------------------//
+	
+	//for GridSetter Class
+	void setPawn(int row, int col, Side side) {
+		grids[row][col] = new Pawn(side);
+	}
+	
+//	void setNull(Node targetNode) {
+//		targetNode.setNode(null);
+//	}
+//	
+//	void setPawn(Node targetNode) {
+//		targetNode.setNode(new Pawn());
+//	}
+	//---------------------------------------//
+	
+	public Boolean isPlaced(int row, int col) {
+		return grids[row][col] != null;
+	}
+
+	public void searchMovibleGrids(int row, int col) {
+		ArrayList<Coordinate> movibleGrids;
+		
+		movibleGrids = grids[row][col].searchMovibleGrids(row, col, this);
+		printGrids(movibleGrids);
+	}
+
+	private void printGrids(ArrayList<Coordinate> movibleGrids) {
+		movibleGrids.forEach(g -> System.out.println(g.toString()));
+	}
+}

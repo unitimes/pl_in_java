@@ -1,0 +1,11 @@
+package chessgame;
+
+public class ChessGame {
+	BoardCreator boardCreator;
+	MoveController moveController;
+	
+	public ChessGame() {
+		boardCreator = new BoardCreator();
+		moveController = new MoveController(boardCreator.getBoard());
+	}
+}

@@ -1,0 +1,44 @@
+package net.slipp.qna;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+public class QnAService {
+	private Database database = new Database();
+	
+	public void create(Question question, String plainTags) {
+		String[] tags = plainTags.split(",");
+		for (String s : tags) {
+			question.addTag(new Tag(s));
+		}
+		database.insert(question);
+	}
+	
+	public Question findQuestionById(int questionId) {
+		return database.findQuestionById(questionId);
+	}
+	
+	public void answer(int questionId, Answer answer) {
+		Question question = database.findQuestionById(questionId);
+		// TODO Question에 Answer 인스턴스를 추가한다.
+	}
+	
+	public void update(Question question, String plainTags) {
+		Question existedQuestion = database.findQuestionById(question.getId());
+		existedQuestion.update(question);
+		
+	}
+
+	public List<Question> findsQuestionByIdDesc() {
+		List<Question> questions = (List<Question>) database.getAllQuestion();
+		Collections.sort(questions, new Comparator<Question>() {
+
+			@Override
+			public int compare(Question o1, Question o2) {
+				return o2.getId() - o1.getId();
+			}
+		});
+		return questions;
+	}
+}

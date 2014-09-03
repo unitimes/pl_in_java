@@ -1,0 +1,12 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+
+import core.Coordinate;
+import chessgame.Board;
+import chessgame.enums.Side;
+
+public interface Piece {
+	ArrayList<Coordinate> searchMovibleGrids(int row, int col,
+			Board presentBoard);
+}

@@ -1,0 +1,30 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+import chessgame.Board;
+import chessgame.enums.Side;
+import core.Coordinate;
+
+public class Bishop implements Piece {
+	Side side;
+
+	public Bishop(Side side) {
+		this.side = side;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			Board presentBoard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

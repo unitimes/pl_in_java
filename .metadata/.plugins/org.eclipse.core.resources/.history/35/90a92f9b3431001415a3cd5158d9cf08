@@ -1,0 +1,7 @@
+package chessgame;
+
+import chessgame.piece.Piece;
+
+public class BoardCreator {
+	Piece[][] grids;
+}

@@ -1,0 +1,17 @@
+package net.slipp.collection;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class StudentComparableTest {
+
+	@Test
+	public void testSortStudentUsingComparable() {
+		String a = "abc";
+		String b = "abcdef";
+		
+		System.out.println(a.compareTo(a));
+	}
+
+}

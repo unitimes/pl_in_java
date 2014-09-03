@@ -1,0 +1,44 @@
+package net.slipp.collection;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.junit.Test;
+
+public class StudentComparableTest {
+
+	@Test
+	public void testStringSorting() {
+		List<String> values = Arrays.asList("b", "a", "d");
+		Collections.sort(values, new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				if(o1.compareTo(o2) == 0){
+					return 0;					
+				}
+				if(o1.compareTo(o2) > 0) {
+					return -1;
+				}
+				return 1;
+			}
+		});
+		
+		System.out.println(values.toString());
+	}
+	
+	@Test
+	public void testStudentSorting() throws Exception {
+		List<Student> students = Arrays.asList(new Student("a", 5), new Student("a", 5),
+				new Student("a", 7), new Student("b", 3), new Student("b", 8), 
+				new Student("c", 1), new Student("c", 120));
+		System.out.println(students.toString());
+		Collections.sort(students);
+		System.out.println(students.toString());
+	}
+}

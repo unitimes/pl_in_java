@@ -1,0 +1,21 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+public class ChessGameTest {
+
+	@Before
+	public void setUp() {
+		ChessGame chessGame = new ChessGame();
+	}
+	
+	@Test
+	public void testMove() {
+		
+	}
+
+}

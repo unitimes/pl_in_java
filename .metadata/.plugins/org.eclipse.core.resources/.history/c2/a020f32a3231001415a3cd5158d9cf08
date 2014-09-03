@@ -1,0 +1,61 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+
+import core.Coordinate;
+import chessgame.Board;
+import chessgame.Node;
+import chessgame.enums.Side;
+
+public class Pawn implements Piece {
+
+	Side side;
+
+	public Pawn(Side side) {
+		this.side = side;
+	}
+
+	@Override
+	public ArrayList<Coordinate> searchMovibleGrids(int row, int col,
+			Board presentBoard) {
+		if (side == Side.WHITE) {
+			return searchMovibleGridsWhenWhite(row, col, presentBoard);
+		}
+		return searchMovibleGridsWhenBlack(row, col, presentBoard);
+	}
+
+	public ArrayList<Coordinate> searchMovibleGridsWhenWhite(int row, int col,
+			Board presentBoard) {
+		ArrayList<Coordinate> movibleNodes = new ArrayList<>();
+		if (!presentBoard.isPlaced(row + 1, col)) {
+			movibleNodes.add(new Coordinate(row + 1, col));
+		}
+		if (presentBoard.isAttackable(row + 1, col + 1, this.side)) {
+			movibleNodes.add(new Coordinate(row + 1, col + 1));
+		}
+		if (presentBoard.isAttackable(row + 1, col - 1, this.side)) {
+			movibleNodes.add(new Coordinate(row + 1, col - 1));
+		}
+		return movibleNodes;
+	}
+
+	public ArrayList<Coordinate> searchMovibleGridsWhenBlack(int row, int col,
+			Board presentBoard) {
+		ArrayList<Coordinate> movibleNodes = new ArrayList<>();
+		if (!presentBoard.isPlaced(row - 1, col)) {
+			movibleNodes.add(new Coordinate(row - 1, col));
+		}
+		if (presentBoard.isAttackable(row - 1, col + 1, this.side)) {
+			movibleNodes.add(new Coordinate(row + 1, col + 1));
+		}
+		if (presentBoard.isAttackable(row - 1, col - 1, this.side)) {
+			movibleNodes.add(new Coordinate(row + 1, col - 1));
+		}
+		return movibleNodes;
+	}
+	
+	@Override
+	public Boolean isYourSide(Side side) {
+		return this.side == side;
+	}
+}

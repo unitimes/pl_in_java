@@ -1,0 +1,26 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import core.Coordinate;
+
+public class BoardTest {
+
+	@Test
+	public void testSearchMovibleNodesWhenNotPlaces() {
+		Board board = new Board();
+		board.setPawn(3, 3);
+		board.searchMovibleGrids(3, 3);
+	}
+
+	@Test
+	public void testLambd() {
+		ArrayList<Coordinate> testGrids = new ArrayList<Coordinate>();
+		testGrids.add(new Coordinate(1, 1));
+		testGrids.get(0).toString();
+	}
+}

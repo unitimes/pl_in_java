@@ -1,0 +1,12 @@
+package chessgame;
+
+class ChessGame {
+	private enum Side {
+		WHITE, BLACK;
+	}
+	
+	private Board board;
+	private int turn;
+	private Side side;
+
+}

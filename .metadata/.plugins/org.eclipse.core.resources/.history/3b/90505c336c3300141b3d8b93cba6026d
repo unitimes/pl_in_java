@@ -1,0 +1,28 @@
+package chessgame;
+
+import java.util.Map;
+
+import chessgame.enums.Side;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+class StatusChecker {
+	Map<Coordinate, Piece> board;
+
+	StatusChecker(Map<Coordinate, Piece> board) {
+		this.board = board;
+	}
+
+	Boolean isPlaced(Coordinate grid) {
+		return board.containsKey(grid);
+	}
+
+	Boolean isMySide(Coordinate grid, Side side) {
+		return board.get(grid).isYourSide(side);
+	}
+
+	Boolean isAttackable(Coordinate grid, Side side) {
+		return isPlaced(grid) && !isMySide(grid, side);
+	}
+
+}

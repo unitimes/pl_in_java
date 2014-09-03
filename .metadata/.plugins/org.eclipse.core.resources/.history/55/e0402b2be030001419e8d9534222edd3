@@ -1,0 +1,16 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class BoardTest {
+
+	@Test
+	public void testSearchMovibleNodesWhenNotPlaces() {
+		Board board = new Board();
+		
+		fail("Not yet implemented");
+	}
+
+}

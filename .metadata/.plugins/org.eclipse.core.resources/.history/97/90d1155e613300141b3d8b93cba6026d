@@ -1,0 +1,23 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import chessgame.enums.Side;
+import chessgame.piece.Pawn;
+
+public class NodeTest {
+
+	@Test
+	public void testIsPlacedWhenNotPlaced() {
+		Node testNode = new Node(null);
+		assertEquals(false, testNode.isPlaced());
+	}
+	
+	@Test
+	public void testIsPlacedWhenPlaced() {
+		Node testNode = new Node(new Pawn(Side.WHITE));
+		assertEquals(true, testNode.isPlaced());
+	}
+}

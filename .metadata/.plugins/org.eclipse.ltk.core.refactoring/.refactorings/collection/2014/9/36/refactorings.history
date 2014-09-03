@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Extract method &apos;private void addTags(Question question, String plainTags)&apos; from &apos;net.slipp.qna.QnAService.create()&apos; to &apos;net.slipp.qna.QnAService&apos;&#x0A;- Original project: &apos;collection&apos;&#x0A;- Method name: &apos;addTags&apos;&#x0A;- Destination type: &apos;net.slipp.qna.QnAService&apos;&#x0A;- Declared visibility: &apos;private&apos;" comments="false" description="Extract method &apos;addTags&apos;" destination="0" exceptions="false" flags="786434" id="org.eclipse.jdt.ui.extract.method" input="/src&lt;net.slipp.qna{QnAService.java" name="addTags" replace="false" selection="267 101" stamp="1409731290207" version="1.0" visibility="2"/>
+</session>

@@ -1,0 +1,9 @@
+package chessgame;
+
+public class Board {
+	Node[][] nodes = new Node[8][8];
+	
+	public Boolean isPlaced(int row, int col) {
+		return nodes[row][col].isPlaced();
+	}
+}

@@ -1,0 +1,19 @@
+package chessgame.piece;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import chessgame.Board;
+
+public class PawnTest {
+
+	@Test
+	public void testSearchMovibleNodes() {
+		Pawn pawn = new Pawn();
+		Board board = new Board();
+		pawn.searchMovibleNodes(3, 3, board);
+		fail("Not yet implemented");
+	}
+
+}

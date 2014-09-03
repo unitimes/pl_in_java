@@ -1,0 +1,73 @@
+package chessgame;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import chessgame.enums.Constant;
+import chessgame.enums.Side;
+import chessgame.piece.Pawn;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+public class Board {
+	Map<Coordinate, Piece> grids2;
+	private Piece[][] grids;
+	
+	public Board () {
+		grids2 = new HashMap<Coordinate, Piece>();
+		setGrids();
+		grids = new Piece[Constant.MAX_ROW.getNumber()][Constant.MAX_COL.getNumber()];
+	}
+	
+	//Set
+	private void setGrids() {
+		grids2.put(new Coordinate(3, 3), new Pawn(Side.BLACK));
+	}
+	
+	//Move
+	public void moveTo(Coordinate from, Coordinate to) {
+		grids2.put(to, grids2.get(from));
+		//ßgrids2.remove(from);
+	}
+	
+	//for test
+	public Boolean contain(Coordinate key) {
+		return grids2.containsKey(key);
+	}
+	
+	//Print
+	public void printGrids() {
+		System.out.println(grids2.toString());
+	}
+	
+	
+	//for GridSetter Class
+	void setPawn(int row, int col, Side side) {
+		grids[row][col] = new Pawn(side);
+	}
+	//---------------------------------------//
+	
+	public Boolean isPlaced(int row, int col) {
+		return grids[row][col] != null;
+	}
+	
+	public Boolean isMySide(int row, int col, Side mySide) {
+		return grids[row][col].isYourSide(mySide);
+	}
+	
+	public Boolean isAttackable(int row, int col, Side mySide) {
+		return isPlaced(row, col) && !isMySide(row, col, mySide);
+	}
+
+	public void searchMovibleGrids(int row, int col) {
+		ArrayList<Coordinate> movibleGrids;
+		
+		movibleGrids = grids[row][col].searchMovibleGrids(row, col, this);
+		printGrids(movibleGrids);
+	}
+
+	private void printGrids(ArrayList<Coordinate> movibleGrids) {
+		movibleGrids.forEach(g -> System.out.println(g.toString()));
+	}
+}

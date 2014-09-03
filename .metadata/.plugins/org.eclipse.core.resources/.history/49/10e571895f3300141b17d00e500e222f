@@ -1,0 +1,29 @@
+package chessgame.piece;
+
+import java.util.ArrayList;
+
+import chessgame.Board;
+import chessgame.enums.Side;
+import core.Coordinate;
+
+public class Knight implements Piece {
+	Side side;
+
+	public Knight(Side side) {
+		this.side = side;
+	}
+
+	@Override
+	public ArrayList<Coordinate> searchMovibleGrids(int row, int col,
+			Board presentBoard) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

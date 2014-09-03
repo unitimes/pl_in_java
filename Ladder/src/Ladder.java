@@ -128,7 +128,7 @@ public class Ladder {
 
 	public static void main(String[] args) {
 		try {
-			Ladder lad = new Ladder(6, 3);
+			Ladder lad = new Ladder(6, 20);
 			lad.printLadder();
 			System.out.format("선택된 값은 %d 입니다. \n", lad.start(2));
 		} catch (Exception e) {

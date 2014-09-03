@@ -1,0 +1,9 @@
+package chessgame;
+
+import chessgame.piece.Piece;
+
+class Node {
+	int row;
+	int col;
+	Piece piece;
+}

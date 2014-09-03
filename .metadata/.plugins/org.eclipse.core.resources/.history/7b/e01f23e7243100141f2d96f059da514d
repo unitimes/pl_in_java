@@ -1,0 +1,29 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
+import chessgame.enums.Side;
+import core.Coordinate;
+
+public class BoardTest {
+
+	@Test
+	public void testSearchMovibleNodesWhenPlaced() {
+		Board board = new Board();
+		board.setPawn(3, 3, Side.WHITE);
+		board.setPawn(4, 4, Side.BLACK);
+		board.setPawn(4, 2, Side.BLACK);
+		board.searchMovibleGrids(3, 3);
+	}
+	
+	@Test
+	public void testSearchMovibleNodesWhenNotPlaced() {
+		Board board = new Board();
+		board.setPawn(3, 3, Side.WHITE);
+		board.searchMovibleGrids(3, 3);
+	}
+}

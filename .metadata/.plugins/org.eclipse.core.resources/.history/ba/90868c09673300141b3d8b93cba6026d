@@ -1,0 +1,19 @@
+package chessgame;
+
+import java.util.Set;
+import org.junit.Test;
+import core.Coordinate;
+
+public class BoardTest {
+
+	@Test
+	public void testMove() throws Exception {
+		Board board = new Board();
+		board.printGrids();
+		board.moveTo(new Coordinate(3, 3), new Coordinate(4, 4));
+		board.printGrids();
+		
+		Set<Coordinate> movibleSet = board.searchMovibleGrids(new Coordinate(4, 4));
+		System.out.println(movibleSet.toString());
+	}
+}

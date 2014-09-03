@@ -1,0 +1,23 @@
+package net.slipp.collection;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.junit.Test;
+
+public class StudentComparableTest {
+
+	@Test
+	public void testSortStudentUsingComparable() {
+		List<String> stringList = new ArrayList<>();
+		stringList.add("a");
+		
+		
+		List<String> values = Arrays.asList("a", "b", "c");
+		
+		
+		System.out.println(a.compareTo(b));
+	}
+
+}

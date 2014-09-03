@@ -1,0 +1,25 @@
+package chessgame;
+
+import core.Coordinate;
+
+public class ChessGame {
+	BoardCreator boardCreator;
+	MoveController moveController;
+	
+	public ChessGame() {
+		boardCreator = new BoardCreator();
+		moveController = new MoveController(boardCreator.getBoard());
+	}
+	
+	public void choosePieceToMove(Coordinate piece) {
+		moveController.printMovibleGridsSet(piece);
+	}
+	
+	public void moveChoosedPieceTo(Coordinate target) {
+		moveController.moveChoosedPieceTo(target);
+	}
+	
+	public void moveDirectTo(Coordinate priceToMove, Coordinate target) {
+		moveController.moveDirectTo(priceToMove, target);
+	}
+}

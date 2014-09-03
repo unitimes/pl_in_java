@@ -1,0 +1,26 @@
+package chessgame;
+
+import core.Coordinate;
+
+class ChessGame {
+	private enum Side {
+		WHITE, BLACK;
+	}
+	
+	private Board board;
+	private int turn;
+	private Side side;
+
+	public ChessGame(Board board) {
+		this.board = board;
+		turn = 1;
+		side = Side.WHITE;
+	}
+	
+	public void searchMovibleGrids(String grid) {
+		Coordinate coordinate = new Coordinate(grid);
+		int row = coordinate.getRow();
+		int col = coordinate.getCol();
+		board.searchMovibleGrids(row, col);
+	}
+}

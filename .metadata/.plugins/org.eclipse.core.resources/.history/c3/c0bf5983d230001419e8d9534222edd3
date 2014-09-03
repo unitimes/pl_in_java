@@ -1,0 +1,18 @@
+package chessgame;
+
+import chessgame.piece.Piece;
+
+public class Node {
+	Piece piece;
+	
+	public Node(Piece piece) {
+		this.piece = piece;
+	}
+	
+	Boolean isPlaced() {
+		if(piece == null) {
+			return false;
+		}
+		return true;
+	}
+}

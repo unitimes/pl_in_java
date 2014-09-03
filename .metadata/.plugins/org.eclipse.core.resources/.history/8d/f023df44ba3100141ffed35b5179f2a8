@@ -1,0 +1,29 @@
+
+
+package net.slipp.collection;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import junit.framework.TestCase;
+
+public class ListTest extends TestCase {
+	private List<Student> students;
+
+	@Override
+	protected void setUp() throws Exception {
+		students = new ArrayList<Student>();
+		students.add(new Student("A", 15));
+		students.add(new Student("B", 18));
+		students.add(new Student("C", 23));
+		students.add(new Student("D", 16));
+	}
+
+	public void testContains() throws Exception {
+		Student std = new Student("A", 15);
+		//assertTrue(students.contains(new Student("A", 15)));
+		//assertTrue(students.contains(new Student("B", 18)));
+		System.out.println("abc");
+		System.out.println(std.equals(new Student("A", 15)));
+	}
+}

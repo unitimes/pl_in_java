@@ -1,0 +1,15 @@
+package core;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CoordinateTest {
+
+	@Test
+	public void testCharValue() {
+		int a = 'A';
+		System.out.println(a);
+	}
+
+}
