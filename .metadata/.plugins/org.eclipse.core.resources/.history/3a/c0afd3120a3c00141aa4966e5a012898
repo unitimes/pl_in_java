@@ -1,0 +1,53 @@
+package chessgame.piece;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import core.Coordinate;
+import chessgame.StatusChecker;
+import chessgame.enums.Constant;
+import chessgame.enums.Side;
+
+public class Rook implements Piece {
+	private CompositeCommon compositePieceCommon;
+	private CompositeMoveCount compositeMoveCount;
+
+	public Rook(Side side) {
+		this.compositePieceCommon = new CompositeCommon(side);
+		this.compositeMoveCount = new CompositeMoveCount();
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		return compositePieceCommon.isYourSide(side);
+	}
+
+	@Override
+	public String toString() {
+		if (isYourSide(Side.BLACK)) {
+			return "\u265C";
+		}
+		return "\u2656";
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		Set<Coordinate> movibleNodes = new HashSet<>();
+		int row = pieceToMove.getRow();
+		int col = pieceToMove.getCol();
+		
+		for (int i = row + 1; i < Constant.MAX_ROW.getNumber(); i++) {
+			
+		}
+		return null;
+	}
+	
+	public Boolean isFirstMove() {
+		return compositeMoveCount.isFirstMove();
+	}
+
+	public void increaseMoveCount() {
+		compositeMoveCount.increaseMoveCount();
+	}
+}

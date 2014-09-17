@@ -1,5 +1,0 @@
-package chessgame.piece;
-
-public interface Piece {
-
-}

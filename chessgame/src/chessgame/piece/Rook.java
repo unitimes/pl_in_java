@@ -1,27 +1,30 @@
 package chessgame.piece;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import core.Coordinate;
 import chessgame.StatusChecker;
+import chessgame.enums.Constant;
 import chessgame.enums.Side;
 
 public class Rook implements Piece {
-	Side side;
+	private CompositeCommon compositePieceCommon;
+	private CompositeMoveCount compositeMoveCount;
 
 	public Rook(Side side) {
-		this.side = side;
+		this.compositePieceCommon = new CompositeCommon(side);
+		this.compositeMoveCount = new CompositeMoveCount();
 	}
 
 	@Override
 	public Boolean isYourSide(Side side) {
-		// TODO Auto-generated method stub
-		return null;
+		return compositePieceCommon.isYourSide(side);
 	}
 
 	@Override
 	public String toString() {
-		if (side == Side.BLACK) {
+		if (isYourSide(Side.BLACK)) {
 			return "\u265C";
 		}
 		return "\u2656";
@@ -30,7 +33,45 @@ public class Rook implements Piece {
 	@Override
 	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
 			StatusChecker statusChecker) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Coordinate> movibleGrids = new HashSet<>();
+		int row = pieceToMove.getRow();
+		int col = pieceToMove.getCol();
+		Boolean flag = true;
+		
+		//add upward
+		for (int i = row + 1; i < Constant.MAX_ROW.getNumber() && flag; i++) {
+			flag = addMovibleGrid(movibleGrids, statusChecker, new Coordinate(i, col));
+		}
+		
+		//add right
+		flag = true;
+		for (int i = col + 1; i < Constant.MAX_COL.getNumber() && flag; i++) {
+			flag = addMovibleGrid(movibleGrids, statusChecker, new Coordinate(row, i));
+		}
+		
+		//add downward
+		flag = true;
+		for (int i = row - 1; i >= 0 && flag; i--) {
+			flag = addMovibleGrid(movibleGrids, statusChecker, new Coordinate(i, col));
+		}
+		
+		//add left
+		flag = true;
+		for (int i = col - 1; i >= 0 && flag; i--) {
+			flag = addMovibleGrid(movibleGrids, statusChecker, new Coordinate(row, i));
+		}
+		return movibleGrids;
+	}
+	
+	private Boolean addMovibleGrid(Set<Coordinate> movibleGrids, StatusChecker statusChecker, Coordinate grid) {
+		return compositePieceCommon.addMovibleGrid(movibleGrids, statusChecker, grid);
+	}
+	
+	public Boolean isFirstMove() {
+		return compositeMoveCount.isFirstMove();
+	}
+
+	public void increaseMoveCount() {
+		compositeMoveCount.increaseMoveCount();
 	}
 }

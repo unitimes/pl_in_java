@@ -1,0 +1,45 @@
+package chessgame.piece;
+
+import java.util.Set;
+
+import chessgame.StatusChecker;
+import chessgame.enums.Side;
+import core.Coordinate;
+
+public class King implements Piece {
+	
+	private CompositePieceCommon compositePieceCommon;
+	private int moveCount;
+
+	public King(Side side) {
+		this.compositePieceCommon = new CompositePieceCommon(side);
+		this.moveCount = 0;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		return compositePieceCommon.isYourSide(side);
+	}
+
+	@Override
+	public String toString() {
+		if (isYourSide(Side.BLACK)) {
+			return "\u265A";
+		}
+		return "\u2654";
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		return null;
+	}
+	
+	public Boolean isFirstMove() {
+		return moveCount == 0;
+	}
+	
+	public void increaseMoveCount() {
+		moveCount++;
+	}
+}

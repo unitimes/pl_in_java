@@ -1,5 +1,0 @@
-package chessgame.enums;
-
-public enum Side {
-
-}

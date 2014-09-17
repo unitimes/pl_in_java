@@ -1,5 +1,0 @@
-package chessgame.piece;
-
-public class Pawn implements Piece {
-
-}

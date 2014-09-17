@@ -1,0 +1,19 @@
+package chessgame.piece;
+
+import chessgame.enums.Side;
+
+class CompositeCommon {
+	Side side;
+
+	CompositeCommon(Side side) {
+		this.side = side;
+	}
+	
+	Boolean isYourSide(Side side) {
+		return this.side == side;
+	}
+	
+	Side getSide() {
+		return this.side;
+	}
+}

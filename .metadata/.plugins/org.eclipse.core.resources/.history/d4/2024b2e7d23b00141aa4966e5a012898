@@ -1,0 +1,37 @@
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Test;
+
+import core.Coordinate;
+
+
+public class BasicTest {
+
+	@Test
+	public void testSet() {
+		Set<Coordinate> testSet = new HashSet<Coordinate>();
+		testSet.add(new Coordinate(2, 2));
+		System.out.println(testSet);
+		testSet.add(null);
+		System.out.println(testSet);
+		System.out.println(testSet.contains(null));
+		testSet.remove(null);
+		System.out.println(testSet.contains(null));
+		testSet.remove(null);
+	}
+
+	@Test
+	public void testMap() throws Exception {
+		Map<Coordinate, String> testMap = new HashMap<Coordinate, String>();
+		testMap.put(new Coordinate(3, 3), "Test");
+		System.out.println(testMap);
+		testMap.put(null, "abc");
+		System.out.println(testMap);
+		System.out.println(testMap.containsKey(null));
+	}
+}

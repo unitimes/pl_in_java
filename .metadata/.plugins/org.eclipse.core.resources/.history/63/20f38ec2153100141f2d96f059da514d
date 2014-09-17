@@ -1,9 +1,0 @@
-package chessgame.piece;
-
-import java.util.ArrayList;
-import core.Coordinate;
-import chessgame.Board;
-
-public interface Piece {
-	ArrayList<Coordinate> searchMovibleNodes(int row, int col, Board presentBoard);
-}

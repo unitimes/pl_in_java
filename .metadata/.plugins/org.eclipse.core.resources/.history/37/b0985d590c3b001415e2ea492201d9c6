@@ -1,0 +1,16 @@
+package chessgame;
+
+class CoordinateSelector {
+	private RecordBoard recordBoard;
+
+	CoordinateSelector(RecordBoard recordBoard) {
+		this.recordBoard = recordBoard;
+	}
+
+	public int productFirstRank() {
+		if (recordBoard.isBlack()) {
+			return 7;
+		}
+		return 0;
+	}
+}

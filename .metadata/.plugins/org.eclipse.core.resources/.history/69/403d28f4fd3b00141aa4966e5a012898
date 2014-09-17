@@ -1,0 +1,129 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import chessgame.enums.Castling;
+import chessgame.enums.Side;
+import chessgame.piece.King;
+import chessgame.piece.Pawn;
+import chessgame.piece.Piece;
+import chessgame.piece.Rook;
+import core.Coordinate;
+
+public class MoveControllerTest {
+	private Map<Coordinate, Piece> testBoard;
+	private MoveController moveController;
+	private RecordBoard recordBoard;
+	private BoardPrinter boardPrinter;
+
+	@Before
+	public void setUp() {
+		testBoard = new HashMap<Coordinate, Piece>();
+		testBoard.put(new Coordinate(0, 4), new King(Side.WHITE));
+		testBoard.put(new Coordinate(0, 7), new Rook(Side.WHITE));
+		testBoard.put(new Coordinate(0, 0), new Rook(Side.WHITE));
+		testBoard.put(new Coordinate(7, 4), new King(Side.BLACK));
+		testBoard.put(new Coordinate(7, 7), new Rook(Side.BLACK));
+		testBoard.put(new Coordinate(7, 0), new Rook(Side.BLACK));
+		testBoard.put(new Coordinate(1, 3), new Pawn(Side.WHITE));
+		testBoard.put(new Coordinate(3, 2), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(3, 4), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(6, 5), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(4, 4), new Pawn(Side.WHITE));
+		((Pawn)testBoard.get(new Coordinate(3, 2))).increaseMoveCount();;
+		((Pawn)testBoard.get(new Coordinate(3, 4))).increaseMoveCount();;
+		((Pawn)testBoard.get(new Coordinate(4, 4))).increaseMoveCount();;
+	}
+
+	@Test
+	public void testCastlingLong() {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		boardPrinter.printBoard();
+		moveController.castling(Castling.LONG);
+		boardPrinter.printBoard();
+		recordBoard.changeSide();
+		moveController.castling(Castling.LONG);
+		boardPrinter.printBoard();
+	}
+
+	@Test
+	public void testCastlingShort() {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		boardPrinter.printBoard();
+		moveController.castling(Castling.SHORT);
+		boardPrinter.printBoard();
+		recordBoard.changeSide();
+		moveController.castling(Castling.SHORT);
+		boardPrinter.printBoard();
+	}
+	
+	@Test
+	public void testEnPassantWhenRight() throws Exception {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		moveController.printMovibleGridsSet(new Coordinate(1, 3));
+		moveController.moveChoosedPieceTo(new Coordinate(3, 3));
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(3, 2));
+		moveController.moveDirectTo(new Coordinate(3, 2), new Coordinate(2, 3));
+		boardPrinter.printBoard();
+	}
+	
+	@Test
+	public void testEnPassantWhenRightJustGoFoward() throws Exception {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		moveController.printMovibleGridsSet(new Coordinate(1, 3));
+		moveController.moveChoosedPieceTo(new Coordinate(3, 3));
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(3, 2));
+		moveController.moveDirectTo(new Coordinate(3, 2), new Coordinate(2, 2));
+		boardPrinter.printBoard();
+	}
+	
+	@Test
+	public void testEnPassantWhenLeft() throws Exception {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		moveController.printMovibleGridsSet(new Coordinate(1, 3));
+		moveController.moveChoosedPieceTo(new Coordinate(3, 3));
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(3, 4));
+		moveController.moveDirectTo(new Coordinate(3, 4), new Coordinate(2, 3));
+		boardPrinter.printBoard();
+	}
+	
+	@Test
+	public void testMakeEnPassantSituation() throws Exception {
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		moveController.printMovibleGridsSet(new Coordinate(1, 3));
+		moveController.moveChoosedPieceTo(new Coordinate(3, 3));
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(3, 4));
+		moveController.moveDirectTo(new Coordinate(6, 5), new Coordinate(4, 5));
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(4, 4));
+		moveController.printMovibleGridsSet(new Coordinate(3, 3));
+	}
+}

@@ -1,0 +1,21 @@
+1410674838031	Move compilation unit
+1410674944534	Move compilation unit
+1410679982418	Extract method 'isPossibleEnPassant'
+1410683855887	Delete element
+1410698813259	Rename local variable 'movibleNodes'
+1410698831208	Rename local variable 'movibleNodes'
+1410699262798	Rename method 'addMovibleGrids'
+1410699271326	Rename method 'addMovibleGrids'
+1410703368650	Extract method 'manageOpponentsAttackRange'
+1410703408310	Rename local variable 'k'
+1410703417344	Rename local variable 'v'
+1410703909508	Extract method 'checkException'
+1410703991303	Extract method 'doBeforeMoveWorks'
+1410704104938	Extract method 'handleSpecialMoveEnvironment'
+1410704278189	Extract method 'handleAfterMoveEnPassantWorks'
+1410704569099	Rename method 'checkException'
+1410704783957	Extract method 'checkExceptionWhenToMakeMovibleGrids'
+1410704791892	Rename method 'makeMovibleGridsSet'
+1410704864281	Extract method 'doBeforeMakeMovibleGridsWorks'
+1410705144980	Rename method 'handleSpecialMoveEnvironment'
+1410705803054	Rename method 'addAttackableGrids'

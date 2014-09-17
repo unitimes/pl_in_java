@@ -14,10 +14,10 @@ public class Coordinate {
 		setCoordinate(grid);
 	}
 
-	private void setCoordinate (String grid)
-	{
+	private void setCoordinate(String grid) {
 		if (grid.length() > 2) {
-			throw new IllegalArgumentException("You've entered an illegal coordinate.");
+			throw new IllegalArgumentException(
+					"You've entered an illegal coordinate.");
 		}
 		int row = grid.charAt(0) - 49;
 		int col = Character.toLowerCase(grid.charAt(1)) - 97;

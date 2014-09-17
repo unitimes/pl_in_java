@@ -1,0 +1,12 @@
+1410069985252	Delete element
+1410182222234	Delete element
+1410183133415	Extract method 'castlingShort'
+1410243154373	Rename method 'isYourFirstMove'
+1410260878848	Extract method 'isGridUnderAttack'
+1410586894105	Rename method 'castlingPlayer'
+1410589728202	Rename local variable 'piece'
+1410590055332	Rename method 'productCastlingCol'
+1410592001647	Rename method 'productCastlingTargetCol'
+1410593939406	Extract method 'isMovibleGrid'
+1410595657481	Rename type 'CompositePieceCommon'
+1410600113740	Rename local variable 'rightPiece'

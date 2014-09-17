@@ -1,0 +1,15 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class EnPassantControllerTest {
+
+	
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

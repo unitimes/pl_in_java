@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
 <typeInfo handle="=Ladder/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_05.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.lang(StringBuffer.class[StringBuffer" modifiers="49" timestamp="1395128855000"/>
-<typeInfo handle="=chessgame/src&lt;chessgame.piece{Piece.java[Piece" modifiers="513" timestamp="1409750070000"/>
 <typeInfo handle="=Ladder/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_05.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.util(HashMap.class[HashMap" modifiers="33" timestamp="1395128855000"/>
 <typeInfo handle="=Ladder/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_05.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.util(TreeMap.class[TreeMap" modifiers="33" timestamp="1395128855000"/>
 <typeInfo handle="=Ladder/\/Library\/Java\/JavaVirtualMachines\/jdk1.8.0_05.jdk\/Contents\/Home\/jre\/lib\/rt.jar&lt;java.util(Comparator.class[Comparator" modifiers="1537" timestamp="1395128855000"/>
+<typeInfo handle="=chessgame/src&lt;chessgame.piece{Piece.java[Piece" modifiers="513" timestamp="1409774118000"/>
 </typeInfoHistroy>

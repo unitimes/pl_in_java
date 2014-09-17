@@ -1,0 +1,90 @@
+package core;
+
+import chessgame.enums.Constant;
+
+public class Coordinate {
+	private int row;
+	private int col;
+
+	public Coordinate(int row, int col) {
+		setCoordinate(row, col);
+	}
+
+	public Coordinate(String grid) {
+		setCoordinate(grid);
+	}
+
+	private void setCoordinate(String grid) {
+		if (grid.length() > 2) {
+			throw new IllegalArgumentException(
+					"You've entered an illegal coordinate.");
+		}
+		int row = grid.charAt(0) - 49;
+		int col = Character.toLowerCase(grid.charAt(1)) - 97;
+		setCoordinate(row, col);
+	}
+
+	 private void setCoordinate(int row, int col) {
+	 checkEffectiveRange(row);
+	 checkEffectiveRange(col);
+	 this.row = row;
+	 this.col = col;
+	 }
+
+	 private void checkEffectiveRange(int number) {
+	 if (number < 0 || number >= Constant.MAX_COL.getNumber()) {
+	 throw new IllegalArgumentException(
+	 "Entered coordinate are over the board range.");
+	 }
+	 }
+
+//	private void setCoordinate(int row, int col) {
+//		this.row = checkEffectiveRange(row);
+//		this.col = checkEffectiveRange(col);
+//	}
+//
+//	private int checkEffectiveRange(int number) {
+//		if (number < 0 || number >= Constant.MAX_COL.getNumber()) {
+//			return 99;
+//		}
+//		return number;
+//	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Row: %d / Col: %d", row, col);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + col;
+		result = prime * result + row;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Coordinate other = (Coordinate) obj;
+		if (col != other.col)
+			return false;
+		if (row != other.row)
+			return false;
+		return true;
+	}
+}

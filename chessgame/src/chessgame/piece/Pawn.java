@@ -4,75 +4,82 @@ import java.util.HashSet;
 import java.util.Set;
 
 import core.Coordinate;
+import chessgame.CoordinateSelector;
 import chessgame.StatusChecker;
 import chessgame.enums.Side;
 
 public class Pawn implements Piece {
 
-	Side side;
+	private CompositeCommon compositePieceCommon;
+	private CompositeMoveCount compositeMoveCount;
 
 	public Pawn(Side side) {
-		this.side = side;
+		this.compositePieceCommon = new CompositeCommon(side);
+		this.compositeMoveCount = new CompositeMoveCount();
 	}
 
 	@Override
 	public Boolean isYourSide(Side side) {
-		return this.side == side;
+		return compositePieceCommon.isYourSide(side);
 	}
 
 	@Override
 	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
 			StatusChecker statusChecker) {
-		if (side == Side.WHITE) {
-			return searchMovibleGridsWhenWhite(pieceToMove, statusChecker);
-		}
-		return searchMovibleGridsWhenBlack(pieceToMove, statusChecker);
-	}
-
-	private Set<Coordinate> searchMovibleGridsWhenWhite(Coordinate pieceToMove,
-			StatusChecker statusChecker) {
-		Set<Coordinate> movibleNodes = new HashSet<>();
+		Set<Coordinate> movibleGrids = new HashSet<>();
 		int row = pieceToMove.getRow();
 		int col = pieceToMove.getCol();
+		Side side = compositePieceCommon.getSide();
+		Coordinate coordinate;
 
-		if (!statusChecker.isPlaced(new Coordinate(row + 1, col))) {
-			movibleNodes.add(new Coordinate(row + 1, col));
+		coordinate = CoordinateSelector.checkCoordinateException(row + 1
+				* CoordinateSelector.productRowIncrementOfPawn(side), col);
+		if (!statusChecker.isPlaced(coordinate)) {
+			movibleGrids.add(coordinate);
 		}
-		if (statusChecker.isAttackable(new Coordinate(row + 1, col + 1),
-				this.side)) {
-			movibleNodes.add(new Coordinate(row + 1, col + 1));
+		if (isFirstMove()
+				&& !statusChecker.isPlaced(coordinate)
+				&& !statusChecker
+						.isPlaced(coordinate = CoordinateSelector.checkCoordinateException(
+								row
+										+ 2
+										* CoordinateSelector
+												.productRowIncrementOfPawn(side),
+								col))) {
+			movibleGrids.add(coordinate);
 		}
-		if (statusChecker.isAttackable(new Coordinate(row + 1, col - 1),
-				this.side)) {
-			movibleNodes.add(new Coordinate(row + 1, col - 1));
-		}
-		return movibleNodes;
+		addAttackableGrid(movibleGrids, statusChecker,
+				CoordinateSelector.checkCoordinateException(row + 1
+						* CoordinateSelector.productRowIncrementOfPawn(side),
+						col + 1));
+		addAttackableGrid(movibleGrids, statusChecker,
+				CoordinateSelector.checkCoordinateException(row + 1
+						* CoordinateSelector.productRowIncrementOfPawn(side),
+						col - 1));
+		movibleGrids.remove(null);
+		return movibleGrids;
 	}
 
-	private Set<Coordinate> searchMovibleGridsWhenBlack(Coordinate pieceToMove,
-			StatusChecker statusChecker) {
-		Set<Coordinate> movibleNodes = new HashSet<>();
-		int row = pieceToMove.getRow();
-		int col = pieceToMove.getCol();
-
-		if (!statusChecker.isPlaced(new Coordinate(row - 1, col))) {
-			movibleNodes.add(new Coordinate(row - 1, col));
+	private void addAttackableGrid(Set<Coordinate> movibleNodes,
+			StatusChecker statusChecker, Coordinate grid) {
+		if (statusChecker.isAttackable(grid, compositePieceCommon.getSide())) {
+			movibleNodes.add(grid);
 		}
-		if (statusChecker.isAttackable(new Coordinate(row - 1, col + 1),
-				this.side)) {
-			movibleNodes.add(new Coordinate(row - 1, col + 1));
-		}
-		if (statusChecker.isAttackable(new Coordinate(row + 1, col - 1),
-				this.side)) {
-			movibleNodes.add(new Coordinate(row - 1, col - 1));
-		}
-		return movibleNodes;
 	}
+
 	@Override
 	public String toString() {
-		if (side == Side.BLACK) {
+		if (compositePieceCommon.isYourSide(Side.BLACK)) {
 			return "\u265F";
 		}
 		return "\u2659";
+	}
+
+	public Boolean isFirstMove() {
+		return compositeMoveCount.isFirstMove();
+	}
+
+	public void increaseMoveCount() {
+		compositeMoveCount.increaseMoveCount();
 	}
 }

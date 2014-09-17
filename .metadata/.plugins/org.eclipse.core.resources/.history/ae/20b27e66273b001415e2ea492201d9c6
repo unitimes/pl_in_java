@@ -1,0 +1,37 @@
+package chessgame;
+
+import java.util.Map;
+
+import chessgame.enums.EnPassant;
+import chessgame.piece.Pawn;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+class EnPassantController {
+	private Map<Coordinate, Piece> board;
+	private RecordBoard recordBoard;
+
+	EnPassantController(Map<Coordinate, Piece> board, RecordBoard recordBoard) {
+		this.board = board;
+		this.recordBoard = recordBoard;
+	}
+
+	EnPassant checkEnPassant(Coordinate coordinateOfPawn) {
+		int row = coordinateOfPawn.getRow();
+		int col = coordinateOfPawn.getCol();
+		return EnPassant.getDirection(isPossibleEnPassant(row, col + 1,
+				EnPassant.RIGHT)
+				+ isPossibleEnPassant(row, col - 1, EnPassant.LEFT));
+	}
+
+	int isPossibleEnPassant(int row, int col, EnPassant direction) {
+		Piece rightPiece = board.get(new Coordinate(row, col + 1));
+		if (rightPiece instanceof Pawn
+				&& !rightPiece.isYourSide(recordBoard.getSide())
+				&& ((Pawn) rightPiece).isSecondMove()) {
+			return direction.getValue();
+		}
+		return EnPassant.NONE.getValue();
+	}
+
+}

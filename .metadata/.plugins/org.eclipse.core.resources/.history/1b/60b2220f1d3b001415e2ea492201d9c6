@@ -1,0 +1,95 @@
+package chessgame.piece;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import core.Coordinate;
+import chessgame.StatusChecker;
+import chessgame.enums.Side;
+
+public class Pawn implements Piece {
+
+	private CompositePieceCommon compositePieceCommon;
+	private int moveCount;
+
+	public Pawn(Side side) {
+		this.compositePieceCommon = new CompositePieceCommon(side);
+		this.moveCount = 0;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		return compositePieceCommon.isYourSide(side);
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		if (isYourSide(Side.WHITE)) {
+			return searchMovibleGridsWhenWhite(pieceToMove, statusChecker);
+		}
+		return searchMovibleGridsWhenBlack(pieceToMove, statusChecker);
+	}
+
+	private Set<Coordinate> searchMovibleGridsWhenWhite(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		Set<Coordinate> movibleNodes = new HashSet<>();
+		int row = pieceToMove.getRow();
+		int col = pieceToMove.getCol();
+
+		if (!statusChecker.isPlaced(new Coordinate(row + 1, col))) {
+			movibleNodes.add(new Coordinate(row + 1, col));
+		}
+		if (isFirstMove() && !statusChecker.isPlaced(new Coordinate(row + 2, col))) {
+			movibleNodes.add(new Coordinate(row + 2, col));
+		}
+		if (statusChecker.isAttackable(new Coordinate(row + 1, col + 1),
+				compositePieceCommon.getSide())) {
+			movibleNodes.add(new Coordinate(row + 1, col + 1));
+		}
+		if (statusChecker.isAttackable(new Coordinate(row + 1, col - 1),
+				compositePieceCommon.getSide())) {
+			movibleNodes.add(new Coordinate(row + 1, col - 1));
+		}
+		return movibleNodes;
+	}
+
+	private Set<Coordinate> searchMovibleGridsWhenBlack(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		Set<Coordinate> movibleNodes = new HashSet<>();
+		int row = pieceToMove.getRow();
+		int col = pieceToMove.getCol();
+
+		if (!statusChecker.isPlaced(new Coordinate(row - 1, col))) {
+			movibleNodes.add(new Coordinate(row - 1, col));
+		}
+		if (isFirstMove() && !statusChecker.isPlaced(new Coordinate(row - 2, col))) {
+			movibleNodes.add(new Coordinate(row - 2, col));
+		}
+		if (statusChecker.isAttackable(new Coordinate(row - 1, col + 1),
+				compositePieceCommon.getSide())) {
+			movibleNodes.add(new Coordinate(row - 1, col + 1));
+		}
+		if (statusChecker.isAttackable(new Coordinate(row - 1, col - 1),
+				compositePieceCommon.getSide())) {
+			movibleNodes.add(new Coordinate(row - 1, col - 1));
+		}
+		return movibleNodes;
+	}
+
+	@Override
+	public String toString() {
+		if (compositePieceCommon.isYourSide(Side.BLACK)) {
+			return "\u265F";
+		}
+		return "\u2659";
+	}
+
+	public Boolean isFirstMove() {
+		return moveCount == 0;
+	}
+
+	public void increaseMoveCount() {
+		moveCount++;
+	}
+}

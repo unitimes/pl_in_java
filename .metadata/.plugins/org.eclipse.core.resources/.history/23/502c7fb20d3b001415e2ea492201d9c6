@@ -1,0 +1,14 @@
+package chessgame;
+
+class CoordinateSelector {
+
+	private CoordinateSelector() {
+	}
+
+	static public int productFirstRank(RecordBoard recordBoard) {
+		if (recordBoard.isBlack()) {
+			return 7;
+		}
+		return 0;
+	}
+}

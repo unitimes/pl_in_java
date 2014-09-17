@@ -23,8 +23,6 @@ public class BoardCreator {
 	}
 
 	private void setGrids() {
-		board.put(new Coordinate(2, 2), new Pawn(Side.BLACK));
-		board.put(new Coordinate(2, 0), new Pawn(Side.WHITE));
 		setFirstRow(Side.BLACK);
 		setFirstRow(Side.WHITE);
 		setSecondRow(Side.BLACK);

@@ -1,0 +1,48 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import chessgame.enums.EnPassant;
+import chessgame.enums.Side;
+import chessgame.piece.Pawn;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+public class EnPassantControllerTest {
+	private Map<Coordinate, Piece> testBoard;
+	private RecordBoard recordBoard;
+	private EnPassantController enPassantController;
+
+	@Before
+	public void setUp() {
+		testBoard = new HashMap<Coordinate, Piece>();
+	}
+
+	@Test
+	public void testBothOfWhite() {
+		testBoard.put(new Coordinate(4, 4), new Pawn(Side.WHITE));
+		testBoard.put(new Coordinate(4, 5), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(4, 3), new Pawn(Side.BLACK));
+		
+		((Pawn)testBoard.get(new Coordinate(4, 5))).increaseMoveCount();
+		((Pawn)testBoard.get(new Coordinate(4, 3))).increaseMoveCount();
+
+//		recordBoard = new RecordBoard();
+//		enPassantController = new EnPassantController(testBoard, recordBoard);
+//		Piece piece = testBoard.get(new Coordinate(4, 5));
+//		System.out.println(piece instanceof Pawn);
+//		System.out.println(!piece.isYourSide(recordBoard.getSide()));
+//		System.out.println(piece);
+//		System.out.println(enPassantController.isPossibleEnPassant(4, 4,
+//				EnPassant.RIGHT));
+		 assertEquals(EnPassant.BOTH, enPassantController.checkEnPassant(new
+		 Coordinate(4, 4)));
+	}
+
+}

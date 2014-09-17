@@ -1,0 +1,30 @@
+package chessgame;
+
+import chessgame.enums.Castling;
+
+class CoordinateSelector {
+
+	private CoordinateSelector() {
+	}
+
+	static public int productFirstRank(RecordBoard recordBoard) {
+		if (recordBoard.isBlack()) {
+			return 7;
+		}
+		return 0;
+	}
+	
+	static public int productCastlingTargetCol(Castling type) {
+		if (type == Castling.LONG) {
+			return 2;
+		}
+		return 6;
+	}
+	
+	static public int productCastlingColOfRook(Castling type) {
+		if (type == Castling.LONG) {
+			return 0;
+		}
+		return 7;
+	}
+}

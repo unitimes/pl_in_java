@@ -17,8 +17,8 @@ public class ChessGame {
 		boardCreator = new BoardCreator();
 		board = boardCreator.getBoard();
 		recordBoard = new RecordBoard();
-		moveController = new MoveController(board, recordBoard);
 		boardPrinter = new BoardPrinter(board);
+		moveController = new MoveController(board, recordBoard, boardPrinter);
 	}
 
 	public void choosePieceToMove(Coordinate piece) {

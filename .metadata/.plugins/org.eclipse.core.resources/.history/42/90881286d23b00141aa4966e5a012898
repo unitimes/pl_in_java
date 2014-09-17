@@ -1,0 +1,26 @@
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.junit.Test;
+
+import core.Coordinate;
+
+
+public class BasicTest {
+
+	@Test
+	public void testSet() {
+		Set<Coordinate> testSet = new HashSet<Coordinate>();
+		testSet.add(new Coordinate(2, 2));
+		System.out.println(testSet);
+		testSet.add(null);
+		System.out.println(testSet);
+		System.out.println(testSet.contains(null));
+		testSet.remove(null);
+		System.out.println(testSet.contains(null));
+		testSet.remove(null);
+	}
+
+}

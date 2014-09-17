@@ -1,0 +1,28 @@
+package chessgame.enums;
+
+public enum EnPassant {
+	LEFT(1), RIGHT(2), BOTH(3);
+	
+	private int value;
+	
+	private EnPassant(int value) {
+		this.value = value;
+	}
+
+	public int getValue() {
+		return value;
+	}
+	
+	static public EnPassant getDirection(int value) {
+		if (value == 1) {
+			return LEFT;
+		}
+		if (value == 2) {
+			return RIGHT;
+		}
+		if (value == 3) {
+			return BOTH;
+		}
+		return null;
+	}
+}

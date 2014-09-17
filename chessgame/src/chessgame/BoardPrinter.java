@@ -16,16 +16,18 @@ class BoardPrinter {
 		this.board = board;
 	}
 
-	BoardPrinter(Map<Coordinate, Piece> board, Set<Coordinate> movibleGrids) {
-		this(board);
-		this.movibleGrids = movibleGrids;
-	}
-	
 	void printBoard() {
+		System.out.println("\u254B a b c d e f g h");
 		for (int row = Constant.MAX_ROW.getNumber() - 1; row >= 0; row--) {
+			System.out.print(row + 1 + " ");
 			printRow(row);
 		}
 		movibleGrids = new HashSet<Coordinate>();
+	}
+	
+	void printBoard(Set<Coordinate> movibleGrids) {
+		this.movibleGrids = movibleGrids;
+		printBoard();
 	}
 
 	private void printRow(int row) {
@@ -37,7 +39,7 @@ class BoardPrinter {
 
 	private void printGrid(Coordinate grid) {
 		if (movibleGrids != null && movibleGrids.contains(grid)) {
-			System.out.print("  ");
+			System.out.print("\u25CC ");
 			return;
 		}
 		if (board.containsKey(grid)) {

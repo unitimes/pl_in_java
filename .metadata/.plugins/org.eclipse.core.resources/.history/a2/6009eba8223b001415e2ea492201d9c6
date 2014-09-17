@@ -1,0 +1,14 @@
+package chessgame;
+
+import java.util.Map;
+
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+class EnPassantController {
+	private Map<Coordinate, Piece> board;
+	
+	EnPassantController(Map<Coordinate, Piece> board) {
+		this.board = board;
+	}
+}

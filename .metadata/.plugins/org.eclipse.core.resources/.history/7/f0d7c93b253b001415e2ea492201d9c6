@@ -1,0 +1,27 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+public class EnPassantControllerTest {
+	private Map<Coordinate, Piece> testBoard;
+	private RecordBoard recordBoard;
+	
+	@Before
+	public void setUp() {
+		testBoard = new HashMap<Coordinate, Piece>();
+	}
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

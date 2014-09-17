@@ -1,0 +1,15 @@
+package chessgame.enums;
+
+public enum EnPassant {
+	LEFT(1), RIGHT(2);
+	
+	private int value;
+	
+	private EnPassant(int value) {
+		this.value = value;
+	}
+
+	public int getValue() {
+		return value;
+	}
+}

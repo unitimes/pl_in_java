@@ -1,0 +1,44 @@
+package chessgame;
+
+import static org.junit.Assert.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import chessgame.enums.Castling;
+import chessgame.enums.Side;
+import chessgame.piece.King;
+import chessgame.piece.Piece;
+import chessgame.piece.Rook;
+import core.Coordinate;
+
+public class MoveControllerTest {
+	private Map<Coordinate, Piece> testBoard;
+	private MoveController moveController;
+	private RecordBoard recordBoard;
+	private BoardPrinter boardPrinter;
+
+	@Before
+	public void setUp() {
+		testBoard = new HashMap<Coordinate, Piece>();
+	}
+
+	@Test
+	public void testCastling() {
+		testBoard.put(new Coordinate(0, 4), new King(Side.WHITE));
+		testBoard.put(new Coordinate(0, 7), new Rook(Side.WHITE));
+		testBoard.put(new Coordinate(0, 0), new Rook(Side.WHITE));
+		
+		recordBoard = new RecordBoard();
+		moveController = new MoveController(testBoard, recordBoard);
+		boardPrinter = new BoardPrinter(testBoard);
+		
+		boardPrinter.printBoard();
+		moveController.castling(Castling.LONG, 0);
+		boardPrinter.printBoard();
+	}
+
+}

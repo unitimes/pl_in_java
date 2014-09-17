@@ -1,0 +1,141 @@
+package chessgame;
+
+import java.util.Map;
+import java.util.Set;
+
+import chessgame.enums.Castling;
+import chessgame.piece.King;
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+class MoveController {
+	private Map<Coordinate, Piece> board;
+	private Set<Coordinate> movibleGrids;
+	private Coordinate lastChoosedPiece;
+	private RecordBoard recordBoard;
+	private StatusChecker statusChecker;
+	private BoardPrinter boardPrinter;
+	private CastlingController castlingController;
+
+	MoveController(Map<Coordinate, Piece> board, RecordBoard recordBoard,
+			BoardPrinter boardPrinter) {
+		this.board = board;
+		this.recordBoard = recordBoard;
+		this.boardPrinter = boardPrinter;
+		this.statusChecker = new StatusChecker(board, recordBoard);
+		this.castlingController = new CastlingController(board, statusChecker,
+				recordBoard);
+	}
+
+	void moveChoosedPieceTo(Coordinate target) {
+		if (lastChoosedPiece == null) {
+			throw new IllegalArgumentException(
+					"You've not yet choosen any pieces.");
+		}
+		if (movibleGrids == null || !movibleGrids.contains(target)) {
+			throw new IllegalArgumentException("It's not a movible coordinate.");
+		}
+		
+		Piece pieceToMove = board.get(lastChoosedPiece);
+		if (pieceToMove instanceof King) {
+			((King) pieceToMove).increaseMoveCount();
+			doAboutCastling(target);
+		}
+
+		// Attack code
+		if (statusChecker.isAttackable(target)) {
+			attackTo(target);
+		}
+
+		board.put(target, board.get(lastChoosedPiece));
+		board.remove(lastChoosedPiece);
+
+		doAfterMoveWorks();
+	}
+
+	private void doAfterMoveWorks() {
+		// Reset
+		lastChoosedPiece = null;
+		movibleGrids = null;
+
+		recordBoard.changeSide();
+	}
+
+	void moveDirectTo(Coordinate pieceToMove, Coordinate target) {
+		makeMovibleGridsSet(pieceToMove);
+		moveChoosedPieceTo(target);
+	}
+
+	private void attackTo(Coordinate target) {
+		recordBoard.recordDeadPiece(board.get(target));
+		board.remove(target);
+	}
+
+	void printMovibleGridsSet(Coordinate piece) {
+		makeMovibleGridsSet(piece);
+		boardPrinter.printBoard(movibleGrids);
+	}
+
+	private void makeMovibleGridsSet(Coordinate coordinateOfpieceToMove) {
+		if (!board.containsKey(coordinateOfpieceToMove)) {
+			throw new IllegalArgumentException("There aren't any pieces.");
+		}
+		Piece choosedPiece = board.get(coordinateOfpieceToMove);
+		if (!choosedPiece.isYourSide(recordBoard.getSide())) {
+			throw new IllegalArgumentException("It's not your piece.");
+		}
+		recordBoard.resetCastlingPossibilitySet();
+		lastChoosedPiece = coordinateOfpieceToMove;
+		movibleGrids = searchMovibleGrids(coordinateOfpieceToMove);
+		if (choosedPiece instanceof King) {
+			checkCastling();
+			addCastlingGrids();
+		}
+	}
+
+	private Set<Coordinate> searchMovibleGrids(Coordinate piece) {
+		return board.get(piece).searchMovibleGrids(piece, this.statusChecker);
+	}
+
+	
+	//---------------------- about Castling move-----------------------------//
+	private void checkCastling() {
+		King king = (King) board.get(lastChoosedPiece);
+		if (king.isFirstMove()) {
+			castlingController.checkCastling();
+		}
+	}
+
+	private void addCastlingGrids() {
+		int row = CoordinateSelector.productFirstRank(recordBoard);
+		if (recordBoard.canCastlingLong()) {
+			movibleGrids.add(new Coordinate(row, 2));
+		}
+		if (recordBoard.canCastlingShort()) {
+			movibleGrids.add(new Coordinate(row, 6));
+		}
+	}
+	
+	private void doAboutCastling(Coordinate target) {
+		if (recordBoard.canCastlingLong()
+				&& statusChecker.isCastlingTarget(target, Castling.LONG)) {
+			castling(Castling.LONG);
+			return;
+		}
+		if (recordBoard.canCastlingShort()
+				&& statusChecker.isCastlingTarget(target, Castling.SHORT)) {
+			castling(Castling.SHORT);
+			return;
+		}		
+	}
+
+
+	void castling(Castling type) {
+		int row = CoordinateSelector.productFirstRank(recordBoard);
+		int colOfRook = CoordinateSelector.productCastlingColOfRook(type);
+		int colOfTarget = CoordinateSelector.productCastlingTargetColOfRook(type);
+		board.put(new Coordinate(row, colOfTarget), board.get(new Coordinate(row, colOfRook)));
+		board.remove(new Coordinate(row, colOfRook));
+	}
+	//------------------ End of about Castling move----------------------------//
+}

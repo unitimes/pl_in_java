@@ -20,9 +20,21 @@ public class ChessGameTest {
 	// (expected=IllegalArgumentException.class)
 	public void testMove() {
 		chessGame.printBoard();
-		chessGame.choosePieceToMove(new Coordinate(1, 1));
+		chessGame.choosePieceToMove(new Coordinate(1, 2));
 		chessGame.printBoard();
-		chessGame.moveChoosedPieceTo(new Coordinate(2, 1));
+		chessGame.moveChoosedPieceTo(new Coordinate(3, 2));
+		chessGame.printBoard();
+		chessGame.choosePieceToMove(new Coordinate(6, 1));
+		chessGame.printBoard();
+		chessGame.moveChoosedPieceTo(new Coordinate(5, 1));
+		chessGame.printBoard();
+		chessGame.choosePieceToMove(new Coordinate(3, 2));
+		chessGame.printBoard();
+		chessGame.moveChoosedPieceTo(new Coordinate(4, 2));
+		chessGame.printBoard();
+		chessGame.choosePieceToMove(new Coordinate(5, 1));
+		chessGame.printBoard();
+		chessGame.moveChoosedPieceTo(new Coordinate(4, 1));
 		chessGame.printBoard();
 	}
 

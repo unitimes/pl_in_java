@@ -1,0 +1,68 @@
+package chessgame.piece;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import chessgame.StatusChecker;
+import chessgame.enums.Side;
+import core.Coordinate;
+
+public class King implements Piece {
+
+	private CompositePieceCommon compositePieceCommon;
+	private int moveCount;
+
+	public King(Side side) {
+		this.compositePieceCommon = new CompositePieceCommon(side);
+		this.moveCount = 0;
+	}
+
+	@Override
+	public Boolean isYourSide(Side side) {
+		return compositePieceCommon.isYourSide(side);
+	}
+
+	@Override
+	public String toString() {
+		if (isYourSide(Side.BLACK)) {
+			return "\u265A";
+		}
+		return "\u2654";
+	}
+
+	@Override
+	public Set<Coordinate> searchMovibleGrids(Coordinate pieceToMove,
+			StatusChecker statusChecker) {
+		Set<Coordinate> movibleNodes = new HashSet<>();
+		int row = pieceToMove.getRow();
+		int col = pieceToMove.getCol();
+		
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row + 1, col));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row + 1, col + 1));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row + 1, col - 1));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row, col + 1));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row, col - 1));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row - 1, col));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row - 1, col + 1));
+		addMovibleGrid(movibleNodes, statusChecker, new Coordinate(row - 1, col - 1));
+
+		return null;
+	}
+
+	private void addMovibleGrid(Set<Coordinate> movibleNodes,
+			StatusChecker statusChecker, Coordinate grid) {
+		if (!statusChecker.isPlaced(grid)
+				|| statusChecker.isAttackable(grid,
+						compositePieceCommon.getSide())) {
+			movibleNodes.add(grid);
+		}
+	}
+
+	public Boolean isFirstMove() {
+		return moveCount == 0;
+	}
+
+	public void increaseMoveCount() {
+		moveCount++;
+	}
+}

@@ -6,12 +6,13 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="Grids" key="selection"/>
+		<item value="contain" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="contain"/>
 			<item value="grids"/>
 			<item value="containsValue"/>
 			<item value="containsKey"/>
@@ -19,7 +20,6 @@
 			<item value="equals"/>
 			<item value="0"/>
 			<item value="Side.WHITE"/>
-			<item value="WHITE"/>
 		</list>
 		<list key="replacehistory">
 			<item value="rankNumber"/>
@@ -31,7 +31,7 @@
 		<item value="263" key="DIALOG_WIDTH"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
-		<item value="1181" key="DIALOG_X_ORIGIN"/>
+		<item value="1017" key="DIALOG_X_ORIGIN"/>
 		<item value="158" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
