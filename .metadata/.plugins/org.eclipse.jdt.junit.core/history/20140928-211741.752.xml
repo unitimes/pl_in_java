@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="StatusCheckerTest" project="chessgame" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="chessgame.StatusCheckerTest" time="0.0">
+    <testcase name="testIsKingSideEmpty" classname="chessgame.StatusCheckerTest" time="0.0"/>
+    <testcase name="testIsKingSideEmptyWhenOn6" classname="chessgame.StatusCheckerTest" time="0.0"/>
+    <testcase name="testIsQueenSideEmptyWhenOn3" classname="chessgame.StatusCheckerTest" time="0.0"/>
+    <testcase name="testIsQueenSideEmpty" classname="chessgame.StatusCheckerTest" time="0.0"/>
+  </testsuite>
+</testrun>

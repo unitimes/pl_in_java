@@ -62,7 +62,7 @@ public class CoordinateSelector {
 		try {
 			return new Coordinate(row, col);
 		} catch (IllegalArgumentException e) {
-			System.err.format("IllegalArgumentException: %s%n", e.getMessage());
+			//System.err.format("IllegalArgumentException: %s%n", e.getMessage());
 			return null;
 		}
 	}

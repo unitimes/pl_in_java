@@ -15,7 +15,7 @@ public class Coordinate {
 	}
 
 	private void setCoordinate(String grid) {
-		if (grid.length() > 2) {
+		if (grid.length() != 2) {
 			throw new IllegalArgumentException(
 					"You've entered an illegal coordinate.");
 		}

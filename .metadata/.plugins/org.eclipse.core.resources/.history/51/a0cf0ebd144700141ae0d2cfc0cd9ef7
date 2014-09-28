@@ -1,0 +1,17 @@
+package userInterface;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import chessgame.enums.Side;
+
+public class MsgPrinterTest {
+
+	@Test
+	public void testCheckmateMsg() {
+		MsgPrinter.printCheckMate(Side.BLACK);
+		MsgPrinter.printCheckMate(Side.WHITE);
+	}
+
+}

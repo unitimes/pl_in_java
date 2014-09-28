@@ -1,0 +1,13 @@
+package chessgame;
+
+import java.util.Map;
+
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+class PawnPromoter {
+	
+	static void promotePawn (Map<Coordinate, Piece> board, RecordBoard recordBoard) {
+		
+	}
+}

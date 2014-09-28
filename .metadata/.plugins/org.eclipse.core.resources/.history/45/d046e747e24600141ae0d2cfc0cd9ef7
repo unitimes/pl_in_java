@@ -1,0 +1,157 @@
+package userInterface;
+
+import java.io.Console;
+import java.util.Scanner;
+
+import core.Coordinate;
+import chessgame.ChessGame;
+import chessgame.enums.UserMsg;
+
+public class UserInterface {
+	UserMsg userMsg;
+	Scanner in;
+	ChessGame chessGame;
+	Boolean flagForWhile;
+	Boolean flagForBreak;
+
+	public UserInterface() {
+		in = new Scanner(System.in);
+	}
+
+	private void playGame() {
+		printWelcomeMsg();
+		userMsg = interpretUserMsg(readUserMsg());
+		if (!userMsg.equals(UserMsg.NEW_GAME)) {
+			startGame();
+		}
+		printGoodbyeMsg();
+	}
+
+	private void printWelcomeMsg() {
+		System.out.println("Welcome to Chess World!!");
+		System.out
+				.print("Enter any key to start a chessgame. Or if you want exit game, please enter 'q': ");
+	}
+
+	private void printGoodbyeMsg() {
+		System.out.println("This msg will be Exploded in 5 senconds.");
+		try {
+			for (int i = 1; i <= 5; i++) {
+				System.out.println(i);
+				Thread.sleep(1000);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			System.out.println("Hey, just kidding^^");
+			System.out.println("Thank you for playing this game!!");
+		}
+	}
+
+	private void printStartGameMsg() {
+		System.out.println("New Game started!!");
+		System.out.println("Always Side 'White' is the first.");
+	}
+
+	private void printInformChoicePieceToMove() {
+		printInformCommon();
+		System.out.print("Choose a grid on where a pice to move is: ");
+	}
+
+	private void printInformChoiceTargetToMove() {
+		printInformCommon();
+		System.out
+				.print("Choose a grid where the pice you've choosed to move: ");
+	}
+	
+	private void printInformCommon() {
+		System.out
+				.println("CAUTION!! Must enter Rank, File in order!! (ex. 5d)");
+		System.out.println("If you want exit this game, enter 'q' or 'Q'.");
+		System.out.println("If you want play new game, enter 'n' or 'N'.");
+	}
+
+
+	private String readUserMsg() {
+		return in.nextLine();
+	}
+
+	private UserMsg interpretUserMsg(String userMsg) {
+		if (userMsg.equals("q") || userMsg.equals("Q")) {
+			return UserMsg.QUIT;
+		}
+		if (userMsg.equals("n") || userMsg.equals("N")) {
+			return UserMsg.NEW_GAME;
+		}
+		return UserMsg.COORDINATE;
+	}
+
+	private void startGame() {
+		flagForWhile = true;
+		flagForBreak = false;
+		createNewGame();
+
+		while (flagForWhile) {
+			handleChoiceToMoveUserMsg();
+		}
+
+		if (flagForBreak) {
+			return;
+		}
+
+		flagForWhile = true;
+		flagForBreak = false;
+		while (flagForWhile) {
+			handleChoiceTargetUserMsg();
+		}
+	}
+
+	private void handleChoiceTargetUserMsg() {
+		printInformChoiceTargetToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.COORDINATE)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.moveChoosedPieceTo(new Coordinate(userMsg));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleChoiceToMoveUserMsg() {
+		printInformChoicePieceToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.COORDINATE)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.choosePieceToMove(new Coordinate(userMsg));
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleNonCoordinateUserMsg(String userMsg) {
+		if (interpretUserMsg(userMsg).equals(UserMsg.QUIT)) {
+			flagForWhile = false;
+			return;
+		}
+		return;
+	}
+
+	private void createNewGame() {
+		chessGame = new ChessGame();
+		printStartGameMsg();
+	}
+
+	public static void main(String[] args) {
+		UserInterface userInterface = new UserInterface();
+		userInterface.playGame();
+	}
+
+}

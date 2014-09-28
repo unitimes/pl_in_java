@@ -1,0 +1,119 @@
+package chessgame;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import chessgame.enums.Castling;
+import chessgame.enums.Constant;
+import chessgame.piece.Piece;
+import chessgame.piece.Rook;
+import core.Coordinate;
+
+class CastlingController {
+	private Map<Coordinate, Piece> board;
+	private StatusChecker statusChecker;
+	private RecordBoard recordBoard;
+	private Set<Coordinate> opponentsAttackRange;
+
+	CastlingController(Map<Coordinate, Piece> board,
+			StatusChecker statusChecker, RecordBoard recordBoard) {
+		this.board = board;
+		this.statusChecker = statusChecker;
+		this.recordBoard = recordBoard;
+	}
+
+	void checkCastling() {
+		opponentsAttackRange = new HashSet<Coordinate>();
+		checkCastling(Castling.SHORT);
+		checkCastling(Castling.LONG);
+	}
+
+	private void checkCastling(Castling type) {
+		if (!isRooksFirstMove(type)) {
+			return;
+		}
+		if (!statusChecker.isCastlingSpaceEmpty(type)) {
+			return;
+		}
+		if (opponentsAttackRange != null) {
+			makeOpponentsAttackRange();
+		}
+		if (isUnderAttack(type)) {
+			return;
+		}
+		recordBoard.addCastlingPossibility(type);
+	}
+
+	private Boolean isRooksFirstMove(Castling type) {
+		int rowOfRook = CoordinateSelector.productFirstRank(recordBoard);
+		int colOfRook = CoordinateSelector.productCastlingColOfRook(type);
+
+		// check whether empty, rook, first in turn.
+		Coordinate coordinateOfRook = new Coordinate(rowOfRook, colOfRook);
+		if (!board.containsKey(coordinateOfRook)) {
+			return false;
+		}
+		if (!(board.get(coordinateOfRook) instanceof Rook)) {
+			return false;
+		}
+		Rook rook = (Rook) board.get(coordinateOfRook);
+		return rook.isFirstMove();
+	}
+
+	// ----------- about check underattack------------------//
+	private Boolean isUnderAttack(Castling type) {
+		if (type == Castling.SHORT) {
+			return isUnderAttackShort();
+		}
+		return isUnderAttackLong();
+	}
+
+	private Boolean isUnderAttackShort() {
+		Boolean result = false;
+		for (int i = 4; i < Constant.MAX_COL.getNumber() - 1; i++) {
+			result = isGridUnderAttack(result, i);
+		}
+		return result;
+	}
+
+	private Boolean isUnderAttackLong() {
+		Boolean result = false;
+		for (int i = 4; i > 1; i--) {
+			result = isGridUnderAttack(result, i);
+		}
+		return result;
+	}
+
+	private boolean isGridUnderAttack(Boolean result, int col) {
+		int rowOfRook = CoordinateSelector.productFirstRank(recordBoard);
+		return result
+				| opponentsAttackRange.contains(new Coordinate(rowOfRook, col));
+	}
+
+	// ----------- End of about check underattack------------------//
+
+	// -----------------about make opponents attack range-----------------//
+	
+	
+	//OpponentsAttackRangeMaker.makeOpponentsAttackRange(board, recordBoard, statusChecker);
+	private void makeOpponentsAttackRange() {
+		board.forEach((k, v) -> {
+			manageOpponentsAttackRange(k, v);
+		});
+	}
+
+	private void manageOpponentsAttackRange(Coordinate coordinate, Piece piece) {
+		if (!piece.isYourSide(recordBoard.getSide())) {
+			addOpponentsAttackRange(piece.searchMovibleGrids(coordinate,
+					statusChecker));
+		}
+	}
+
+	private void addOpponentsAttackRange(Set<Coordinate> opponentsMovibleGrids) {
+		if (opponentsMovibleGrids != null) {
+			opponentsAttackRange.addAll(opponentsMovibleGrids);
+		}
+	}
+	// -----------------end of about make opponents attack range-----------//
+}

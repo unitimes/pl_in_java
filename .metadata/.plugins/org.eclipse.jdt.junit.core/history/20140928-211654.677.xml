@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CastlingControllerTest" project="chessgame" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="chessgame.CastlingControllerTest" time="0.0">
+    <testcase name="testCastlingControllerWhenKingUnderAttack" classname="chessgame.CastlingControllerTest" time="0.0"/>
+    <testcase name="testCastlingController" classname="chessgame.CastlingControllerTest" time="0.0"/>
+    <testcase name="testCastlingControllerWhenUnderAttack" classname="chessgame.CastlingControllerTest" time="0.0"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,153 @@
+package userInterface;
+
+import java.io.Console;
+import java.util.Scanner;
+
+import core.Coordinate;
+import chessgame.ChessGame;
+import chessgame.enums.UserMsg;
+
+public class UserInterface {
+	UserMsg userMsg;
+	Scanner in;
+	ChessGame chessGame;
+	Boolean flagForWhile;
+	Boolean flagForNewGame;
+	Boolean flagForQuitGame;
+	
+	public UserInterface() {
+		in = new Scanner(System.in);
+	}
+
+	private void playGame() {
+		handleFlag(null);
+		MsgPrinter.printWelcomeMsg();
+		userMsg = interpretUserMsg(readUserMsg());
+		if (userMsg.equals(UserMsg.QUIT)) {
+			MsgPrinter.printGoodbyeMsg();
+			return;
+		}
+		while(!flagForQuitGame) {
+			startGame();
+		}
+		MsgPrinter.printGoodbyeMsg();
+	}
+
+	private void startGame() {
+		createNewGame();
+		chessGame.printBoard();
+		handleFlag(null);
+
+		while (!flagForNewGame) {
+			processRoutineInteraction();
+		}
+	}
+	
+	private void processRoutineInteraction() {
+		while (flagForWhile) {
+			handleChoiceToMoveUserMsg();
+		}
+
+		if (flagForNewGame) {
+			return;
+		}
+
+		handleFlag(null);
+		while (flagForWhile) {
+			handleChoiceTargetUserMsg();
+		}
+	}
+
+	private void createNewGame() {
+		chessGame = new ChessGame();
+		MsgPrinter.printStartGameMsg();
+	}
+
+	private void handleChoiceTargetUserMsg() {
+		MsgPrinter.printInformChoiceTargetToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.COORDINATE)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.moveChoosedPieceTo(new Coordinate(userMsg));
+			handleFlag(UserMsg.COORDINATE);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleChoiceToMoveUserMsg() {
+		MsgPrinter.printInformChoicePieceToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.COORDINATE)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.choosePieceToMove(new Coordinate(userMsg));
+			handleFlag(UserMsg.COORDINATE);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleNonCoordinateUserMsg(String userMsg) {
+		if (interpretUserMsg(userMsg).equals(UserMsg.QUIT)) {
+			handleFlag(UserMsg.QUIT);
+			return;
+		}
+		handleFlag(UserMsg.NEW_GAME);
+		return;
+	}
+
+	private String readUserMsg() {
+		return in.nextLine();
+	}
+
+	private UserMsg interpretUserMsg(String userMsg) {
+		if (userMsg.equals("q") || userMsg.equals("Q")) {
+			return UserMsg.QUIT;
+		}
+		if (userMsg.equals("n") || userMsg.equals("N")) {
+			return UserMsg.NEW_GAME;
+		}
+		return UserMsg.COORDINATE;
+	}
+	
+	private void handleFlag(UserMsg userMsg) {
+		if (userMsg == null) {
+			flagForWhile = true;
+			flagForNewGame = false;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.COORDINATE)) {
+			flagForWhile = false;
+			flagForNewGame = false;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.NEW_GAME)) {
+			flagForWhile = false;
+			flagForNewGame = true;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.QUIT)) {
+			flagForWhile = false;
+			flagForNewGame = true;
+			flagForQuitGame = true;
+			return;
+		}
+	}
+
+	public static void main(String[] args) {
+		UserInterface userInterface = new UserInterface();
+		userInterface.playGame();
+	}
+
+}

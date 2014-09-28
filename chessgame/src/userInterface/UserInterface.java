@@ -1,0 +1,187 @@
+package userInterface;
+
+import java.util.Scanner;
+
+import core.Coordinate;
+import chessgame.ChessGame;
+import chessgame.enums.Side;
+import chessgame.enums.UserMsg;
+
+public class UserInterface {
+	UserMsg userMsg;
+	Scanner in;
+	ChessGame chessGame;
+	Boolean flagForWhile;
+	Boolean flagForNewGame;
+	Boolean flagForQuitGame;
+
+	public UserInterface() {
+		in = new Scanner(System.in);
+	}
+
+	private void playGame() {
+		handleFlag(UserMsg.RESET_FLAG);
+		MsgPrinter.printWelcomeMsg();
+		userMsg = interpretUserMsg(readUserMsg());
+		if (userMsg.equals(UserMsg.QUIT)) {
+			MsgPrinter.printGoodbyeMsg();
+			return;
+		}
+		while (!flagForQuitGame) {
+			startGame();
+		}
+		MsgPrinter.printGoodbyeMsg();
+	}
+
+	private void startGame() {
+		createNewGame();
+		handleFlag(UserMsg.RESET_FLAG);
+
+		while (!flagForNewGame) {
+			processRoutineInteraction();
+		}
+	}
+
+	private void processRoutineInteraction() {
+		chessGame.printBoard();
+		chessGame.printRecord();
+		handleFlag(UserMsg.RESET_FLAG);
+		while (flagForWhile) {
+			handleChoiceToMoveUserMsg();
+		}
+
+		if (flagForNewGame) {
+			return;
+		}
+
+		handleFlag(UserMsg.RESET_FLAG);
+		while (flagForWhile) {
+			handleChoiceTargetUserMsg();
+		}
+
+		while (chessGame.isPossiblePromotion()) {
+			hadlePromotionUserMsg();
+		}
+
+		if (chessGame.isCheckmate()) {
+			Side side = Side.BLACK;
+			if (chessGame.isWhite()) {
+				side = Side.WHITE;
+			}
+			MsgPrinter.printCheckMate(side);
+			handleFlag(UserMsg.NEW_GAME);
+		}
+	}
+
+	private void createNewGame() {
+		chessGame = new ChessGame();
+		MsgPrinter.printStartGameMsg();
+	}
+
+	private void handleChoiceTargetUserMsg() {
+		MsgPrinter.printInformChoiceTargetToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.NEXT)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.moveChoosedPieceTo(new Coordinate(userMsg));
+			handleFlag(UserMsg.NEXT);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleChoiceToMoveUserMsg() {
+		MsgPrinter.printInformChoicePieceToMove();
+		String userMsg = readUserMsg();
+		if (!interpretUserMsg(userMsg).equals(UserMsg.NEXT)
+				&& !interpretUserMsg(userMsg).equals(UserMsg.RE_CHOOSE)) {
+			handleNonCoordinateUserMsg(userMsg);
+			return;
+		}
+		try {
+			chessGame.choosePieceToMove(new Coordinate(userMsg));
+			handleFlag(UserMsg.NEXT);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void hadlePromotionUserMsg() {
+		MsgPrinter.printInformPromotion();
+		try {
+			chessGame.promotePawn(readUserMsg());
+			handleFlag(UserMsg.NEXT);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+
+	private void handleNonCoordinateUserMsg(String userMsg) {
+		if (interpretUserMsg(userMsg).equals(UserMsg.QUIT)) {
+			handleFlag(UserMsg.QUIT);
+			return;
+		}
+		if (interpretUserMsg(userMsg).equals(UserMsg.RE_CHOOSE)) {
+			handleFlag(UserMsg.NEXT);
+			return;
+		}
+		handleFlag(UserMsg.NEW_GAME);
+		return;
+	}
+
+	private String readUserMsg() {
+		return in.nextLine();
+	}
+
+	private UserMsg interpretUserMsg(String userMsg) {
+		if (userMsg.equals("q") || userMsg.equals("Q")) {
+			return UserMsg.QUIT;
+		}
+		if (userMsg.equals("n") || userMsg.equals("N")) {
+			return UserMsg.NEW_GAME;
+		}
+		if (userMsg.equals("r") || userMsg.equals("R")) {
+			return UserMsg.RE_CHOOSE;
+		}
+		return UserMsg.NEXT;
+	}
+
+	private void handleFlag(UserMsg userMsg) {
+		if (userMsg.equals(UserMsg.RESET_FLAG)) {
+			flagForWhile = true;
+			flagForNewGame = false;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.NEXT)) {
+			flagForWhile = false;
+			flagForNewGame = false;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.NEW_GAME)) {
+			flagForWhile = false;
+			flagForNewGame = true;
+			flagForQuitGame = false;
+			return;
+		}
+		if (userMsg.equals(UserMsg.QUIT)) {
+			flagForWhile = false;
+			flagForNewGame = true;
+			flagForQuitGame = true;
+			return;
+		}
+	}
+
+	public static void main(String[] args) {
+		UserInterface userInterface = new UserInterface();
+		userInterface.playGame();
+	}
+
+}

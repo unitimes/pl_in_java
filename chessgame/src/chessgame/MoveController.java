@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import chessgame.enums.Castling;
+import chessgame.enums.Constant;
 import chessgame.enums.EnPassant;
 import chessgame.piece.King;
 import chessgame.piece.Pawn;
@@ -80,7 +81,18 @@ class MoveController {
 	}
 
 	private void doAfterMoveWorks(Coordinate target) {
+		if (board.get(target) instanceof King) {
+			recordBoard.recordKingsGrid(target);
+		}
 		handleAfterMoveEnPassantWorks(target);
+		if(checkPromotionPossiblity(target)) {
+			recordBoard.informPromotionPossiblity(target);
+			return;
+		}
+		resetAfterMove();
+	}
+	
+	void resetAfterMove() {
 		// Reset
 		lastChoosedPiece = null;
 		movibleGrids = null;
@@ -88,19 +100,19 @@ class MoveController {
 		recordBoard.changeSide();
 	}
 	
-	private void handleAfterMoveEnPassantWorks(Coordinate target) {
-		Piece piece = board.get(target);
-		if (piece instanceof Pawn) {
-			enPassantController.doAboutEnPassantAfterMove(target);
-			((Pawn) piece).increaseMoveCount();
-		}
-	}
-	
 	private void attackTo(Coordinate target) {
 		recordBoard.recordDeadPiece(board.get(target));
 		board.remove(target);
 	}
 
+	private boolean checkPromotionPossiblity(Coordinate targetGrid) {
+		if (board.get(targetGrid) instanceof Pawn && (targetGrid.getRow() == Constant.MAX_ROW.getNumber() -1 || targetGrid.getRow() == 0)) {
+			return true;
+		}
+		return false;
+	}
+
+	//----------about make movible grids---------------------//
 	private void makeMovibleGrids(Coordinate coordinateOfpieceToMove) {
 		doBeforeMakeMovibleGridsWorks(coordinateOfpieceToMove);
 		Piece choosedPiece = board.get(coordinateOfpieceToMove);
@@ -113,6 +125,9 @@ class MoveController {
 		}
 		if (choosedPiece instanceof Pawn) {
 			addEnPassantGrids();
+		}
+		if (movibleGrids.isEmpty()) {
+			throw new IllegalArgumentException("There aren't any places to move.");
 		}
 	}
 
@@ -136,6 +151,7 @@ class MoveController {
 		makeMovibleGrids(piece);
 		boardPrinter.printBoard(movibleGrids);
 	}
+	//----------End of about make movible grids--------------//
 
 	// ---------------------about EnPassant move-----------------------------//
 	private void addEnPassantGrids() {
@@ -170,7 +186,14 @@ class MoveController {
 		}
 		attackTo(new Coordinate(lastChoosedPiece.getRow(), colOfTarget));
 	}
-
+	
+	private void handleAfterMoveEnPassantWorks(Coordinate target) {
+		Piece piece = board.get(target);
+		if (piece instanceof Pawn) {
+			enPassantController.doAboutEnPassantAfterMove(target);
+			((Pawn) piece).increaseMoveCount();
+		}
+	}
 	// ---------------------end of about EnPassant move---------------------//
 
 	// ---------------------- about Castling move-----------------------------//

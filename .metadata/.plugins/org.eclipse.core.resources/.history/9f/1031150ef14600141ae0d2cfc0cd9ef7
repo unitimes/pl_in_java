@@ -1,0 +1,17 @@
+package chessgame;
+
+import java.util.Map;
+import java.util.Set;
+
+import chessgame.piece.Piece;
+import core.Coordinate;
+
+public class OpponentsAttackRangeMaker {
+	public Map<Coordinate, Piece> board;
+	public StatusChecker statusChecker;
+	public RecordBoard recordBoard;
+	public Set<Coordinate> opponentsAttackRange;
+
+	public OpponentsAttackRangeMaker() {
+	}
+}

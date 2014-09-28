@@ -32,6 +32,20 @@ public class MoveControllerTest {
 
 	@Test
 	public void testCastlingLong() {
+		testBoard.put(new Coordinate(0, 4), new King(Side.WHITE));
+		testBoard.put(new Coordinate(0, 7), new Rook(Side.WHITE));
+		testBoard.put(new Coordinate(0, 0), new Rook(Side.WHITE));
+		testBoard.put(new Coordinate(7, 4), new King(Side.BLACK));
+		testBoard.put(new Coordinate(7, 7), new Rook(Side.BLACK));
+		testBoard.put(new Coordinate(7, 0), new Rook(Side.BLACK));
+		testBoard.put(new Coordinate(1, 3), new Pawn(Side.WHITE));
+		testBoard.put(new Coordinate(3, 2), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(3, 4), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(6, 5), new Pawn(Side.BLACK));
+		testBoard.put(new Coordinate(4, 4), new Pawn(Side.WHITE));
+		((Pawn)testBoard.get(new Coordinate(3, 2))).increaseMoveCount();;
+		((Pawn)testBoard.get(new Coordinate(3, 4))).increaseMoveCount();;
+		((Pawn)testBoard.get(new Coordinate(4, 4))).increaseMoveCount();;
 		recordBoard = new RecordBoard();
 		boardPrinter = new BoardPrinter(testBoard);
 		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
@@ -400,5 +414,23 @@ public class MoveControllerTest {
 		testBoard.put(new Coordinate(0, 0), new Knight(Side.WHITE));
 		boardPrinter.printBoard();
 		moveController.printMovibleGridsSet(new Coordinate(0, 0));
+	}
+	
+	@Test
+	public void testPromotion() throws Exception {
+		testBoard.put(new Coordinate(6, 4), new Pawn(Side.WHITE));
+
+		recordBoard = new RecordBoard();
+		boardPrinter = new BoardPrinter(testBoard);
+		moveController = new MoveController(testBoard, recordBoard, boardPrinter);
+		
+		boardPrinter.printBoard();
+		moveController.printMovibleGridsSet(new Coordinate(6, 4));
+		moveController.moveChoosedPieceTo(new Coordinate(7, 4));
+		
+		System.out.println(recordBoard.getPromotionTarget());
+		
+		PawnPromoter.promotePawn(testBoard, recordBoard, new Queen(recordBoard.getSide()));
+		boardPrinter.printBoard();
 	}
 }

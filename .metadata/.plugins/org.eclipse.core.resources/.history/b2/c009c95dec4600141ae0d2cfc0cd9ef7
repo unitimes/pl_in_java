@@ -1,0 +1,5 @@
+package chessgame.enums;
+
+public enum UserMsg {
+	QUIT, NEW_GAME, COORDINATE
+}

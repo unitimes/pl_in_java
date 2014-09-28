@@ -1,0 +1,8 @@
+1411887079293	Extract method 'createNewGame'
+1411888498207	Rename field 'flag'
+1411889080143	Extract method 'printInformCommon'
+1411895588218	Extract Class...
+1411905088646	Extract method 'resetVariables'
+1411905933599	Rename enum constant 'COORDINATE'
+1411907181632	Rename field 'PromotionTarget'
+1411911512498	Delete element

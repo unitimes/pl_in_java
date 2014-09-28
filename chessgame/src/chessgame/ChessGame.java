@@ -1,24 +1,42 @@
 package chessgame;
 
 import java.util.Map;
+import java.util.Set;
 
+import javax.swing.text.StyledEditorKit.BoldAction;
+
+import chessgame.piece.Bishop;
+import chessgame.piece.Knight;
 import chessgame.piece.Piece;
+import chessgame.piece.Queen;
+import chessgame.piece.Rook;
 import core.Coordinate;
 
 public class ChessGame {
-	private BoardCreator boardCreator;
+	//private BoardCreator boardCreator;
 	private MoveController moveController;
 	private BoardPrinter boardPrinter;
 	private RecordBoard recordBoard;
+	private Map<Coordinate, Piece> board;
+	private StatusChecker statusChecker;
 
 	public ChessGame() {
-		Map<Coordinate, Piece> board;
-
-		boardCreator = new BoardCreator();
-		board = boardCreator.getBoard();
-		recordBoard = new RecordBoard();
-		boardPrinter = new BoardPrinter(board);
-		moveController = new MoveController(board, recordBoard, boardPrinter);
+		this(new BoardCreator().getBoard());
+		//this.boardCreator = new BoardCreator();
+		//this.board = boardCreator.getBoard();
+//		this.recordBoard = new RecordBoard();
+//		this.boardPrinter = new BoardPrinter(board);
+//		this.moveController = new MoveController(board, recordBoard, boardPrinter);
+	}
+	
+	public ChessGame(Map<Coordinate, Piece> board) {
+		//this.boardCreator = new BoardCreator();
+		//this.board = boardCreator.getBoard();
+		this.board = board; 
+		this.recordBoard = new RecordBoard();
+		this.boardPrinter = new BoardPrinter(board);
+		this.moveController = new MoveController(board, recordBoard, boardPrinter);
+		this.statusChecker = new StatusChecker(board, recordBoard);
 	}
 
 	public void choosePieceToMove(Coordinate piece) {
@@ -32,12 +50,53 @@ public class ChessGame {
 	public void moveDirectTo(Coordinate priceToMove, Coordinate target) {
 		moveController.moveDirectTo(priceToMove, target);
 	}
-	
+
 	public void printBoard() {
 		boardPrinter.printBoard();
 	}
-	
+
 	public void printRecord() {
 		recordBoard.printRecord();
+	}
+
+	public boolean isCheckmate() {
+		Set<Coordinate> opponentsAttackRange = OpponentsAttackRangeMaker.makeOpponentsAttackRange(board, recordBoard, statusChecker);
+		return opponentsAttackRange.contains(recordBoard.getKingsGrid());
+	}
+	
+	public boolean isPossiblePromotion() {
+		return recordBoard.isPossiblePromotion();
+	}
+
+	public void promotePawn(String type) {
+		Piece piece = selectPiece(type);
+		if (piece == null) {
+			throw new IllegalArgumentException("You have to promote your pawn.");
+		}
+		PawnPromoter.promotePawn(board, recordBoard, piece);
+		moveController.resetAfterMove();
+	}
+	
+	public boolean isWhite() {
+		return recordBoard.isWhite();
+	}
+
+	private Piece selectPiece(String type) {
+		if (type == null) {
+			return null;
+		}
+		if (type.equals("q") || type.equals("Q")) {
+			return new Queen(recordBoard.getSide());
+		}
+		if (type.equals("r") || type.equals("R")) {
+			return new Rook(recordBoard.getSide());
+		}
+		if (type.equals("k") || type.equals("K")) {
+			return new Knight(recordBoard.getSide());
+		}
+		if (type.equals("b") || type.equals("B")) {
+			return new Bishop(recordBoard.getSide());
+		}
+		return null;
 	}
 }

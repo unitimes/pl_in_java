@@ -94,23 +94,29 @@ class CastlingController {
 	// ----------- End of about check underattack------------------//
 
 	// -----------------about make opponents attack range-----------------//
+	
+	
+	//OpponentsAttackRangeMaker.makeOpponentsAttackRange(board, recordBoard, statusChecker);
 	private void makeOpponentsAttackRange() {
-		board.forEach((k, v) -> {
-			manageOpponentsAttackRange(k, v);
-		});
+		opponentsAttackRange = OpponentsAttackRangeMaker.makeOpponentsAttackRange(board, recordBoard, statusChecker);
 	}
-
-	private void manageOpponentsAttackRange(Coordinate coordinate, Piece piece) {
-		if (!piece.isYourSide(recordBoard.getSide())) {
-			addOpponentsAttackRange(piece.searchMovibleGrids(coordinate,
-					statusChecker));
-		}
-	}
-
-	private void addOpponentsAttackRange(Set<Coordinate> opponentsMovibleGrids) {
-		if (opponentsMovibleGrids != null) {
-			opponentsAttackRange.addAll(opponentsMovibleGrids);
-		}
-	}
+	//	private void makeOpponentsAttackRange() {
+//		board.forEach((k, v) -> {
+//			manageOpponentsAttackRange(k, v);
+//		});
+//	}
+//
+//	private void manageOpponentsAttackRange(Coordinate coordinate, Piece piece) {
+//		if (!piece.isYourSide(recordBoard.getSide())) {
+//			addOpponentsAttackRange(piece.searchMovibleGrids(coordinate,
+//					statusChecker));
+//		}
+//	}
+//
+//	private void addOpponentsAttackRange(Set<Coordinate> opponentsMovibleGrids) {
+//		if (opponentsMovibleGrids != null) {
+//			opponentsAttackRange.addAll(opponentsMovibleGrids);
+//		}
+//	}
 	// -----------------end of about make opponents attack range-----------//
 }
